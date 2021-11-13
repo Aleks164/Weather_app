@@ -1,0 +1,95 @@
+
+body {
+  background-color: #ffa6a6;
+}
+#WeatherCityTemp  {
+  display: flex;
+}
+ol > li {
+  /*display: flex;*/
+  font-size: 25px;
+}
+  #maindiv {
+    display: flex;
+    width: 700px;
+  }
+  #textdiv {
+    display: block;
+  }
+
+  #greenBold {
+    font-weight: normal;
+  }
+  #greenBold:hover {
+    color: green;
+    font-weight: bold;
+  }
+ #form {
+   
+  margin: 15px;
+ }
+
+  li:hover {
+  color: red;
+}
+
+.title {
+  display: block;
+  text-align: left;
+  font-family: Papyrus; 
+  color: grey;
+  width: 700px;
+  margin: 1px;
+  padding-left: 15px;
+  font-size: 32px;
+  text-align: left;
+}
+ form {
+  display: flex;
+ }
+ li {
+  background-color: #fefbd8; 
+  text-align: left;
+ }
+
+p {
+  display: block;
+  float: left;
+  width: 700px;
+  background-color: #fefbd8; 
+  text-align: center;
+   
+   
+  }
+  #weatherInfoWindow {
+     position: absolute;
+       top: 90%;
+       right:  0%;
+        height: 40px;
+         width: 240px;
+          border: 2px solid grey;
+  }
+
+  #weatherInfoWindowRiht {
+     position: absolute;
+       top: 21.5%;
+       right:  0%;
+        height: 110px;
+         width: 240px;
+          border: 2px solid grey;
+          font-size: 20px;
+          font-weight: bold;
+          vertical-align: baseline;
+  }
+
+
+
+
+    .animate__fadeInLeftBig{
+      animation-duration: 1.5s;
+    }
+    .animate__fadeInRightBig{
+      animation-duration: 1.5s;
+    }
+
+   

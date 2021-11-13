@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Home work Aleksey L</title>
+  </head>
+  <body>
+    <h1 class="title">Weather</h1>
+<div id="maindiv">
+<div id="textdiv"> 
+    <p>
+      Вы создаете прототип "списка задач". Пользователь может вводить данные в
+      поле ввода, и видеть список введенных данных ниже. При обновлении страницы
+      (или закрытии браузера) список сохраняется.
+    </p>
+
+    <p id="weatherInfo">
+       
+    </p>
+    
+    <div>
+      <p class="animate__fadeInLeftBig" id="weatherInfoWindow">
+      </p>
+    </div>
+    <div>
+      <p class="animate__fadeInRightBig" id="weatherInfoWindowRiht">
+      </p>
+    </div>
+    </div>
+    <div id="form">
+    <form>
+      <input
+        id="userInput"
+        placeholder="Type city and press enter"
+        required
+        autofocus
+      />
+      <button>Get weather</button>
+    </form>
+    </div>
+    </div>
+    <!-- Важно! чтобы script был в конце документа -->
+    <script src="3.js"></script>
+    <script src="weatherInfoWindow.js"></script>
+  </body>
+</html>
