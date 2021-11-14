@@ -28,7 +28,7 @@
       const result = await respons.json();
       const {temp} = result.main;
       const city = result.name;
-
+      console.log(result);
       return `Current temperature in ${city} is  ${temp} °С`
     }
       return  innerText  
@@ -62,8 +62,8 @@
        `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityName}&appid=${API_KEY}`
     );
     if (respons.ok) {
-      console.log(respons);
-      return await respons.json();
+      const resp = await respons.json();
+      return resp;
     }
     return cityName
   };

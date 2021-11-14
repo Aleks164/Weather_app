@@ -16,7 +16,6 @@ ol > li {
   #textdiv {
     display: block;
   }
-
   #greenBold {
     font-weight: normal;
   }
@@ -24,24 +23,44 @@ ol > li {
     color: green;
     font-weight: bold;
   }
- #form {
-   
+ #form {   
   margin: 15px;
  }
-
   li:hover {
   color: red;
 }
-
+#weatherInfocont{
+  height: 340px;
+  display: block;
+  float: left;
+  border: 10px solid transparent;
+  width: 680px;
+    /* -moz-border-image: url(images/1.png) 30 round round;
+    -webkit-border-image: url(images/1.png) 30 round round; 
+    -o-border-image: url(images/1.png) 30 round round; */
+    border-image: url(images/1.png) 10% repeat;
+}
+#weatherInfo {
+  height: 100%;
+  margin-top: 0px;
+  width: 35%;
+  display: inline-block;  
+}
+#map {
+  height: 100%;  
+  width: 65%;
+  display: inline-block;
+  background-color: goldenrod;  
+}
 .title {
   display: block;
   text-align: left;
   font-family: Papyrus; 
-  color: grey;
+  color: rgb(42, 157, 224);
   width: 700px;
   margin: 1px;
   padding-left: 15px;
-  font-size: 32px;
+  font-size: 42px;
   text-align: left;
 }
  form {
@@ -51,15 +70,12 @@ ol > li {
   background-color: #fefbd8; 
   text-align: left;
  }
-
 p {
   display: block;
   float: left;
   width: 700px;
   background-color: #fefbd8; 
-  text-align: center;
-   
-   
+  text-align: center;     
   }
   #weatherInfoWindow {
      position: absolute;
@@ -67,7 +83,13 @@ p {
        right:  0%;
         height: 40px;
          width: 240px;
+         
           border: 2px solid grey;
+          -moz-border-image: url(images/1.png) 30 round round;
+    -webkit-border-image: url(images/1.png) 30 round round; 
+    -o-border-image: url(images/1.png) 30 round round;
+    border-image: url(images/1.png) 30 round round;
+
   }
 
   #weatherInfoWindowRiht {
@@ -76,15 +98,15 @@ p {
        right:  0%;
         height: 110px;
          width: 240px;
-          border: 2px solid grey;
+         border: 2px solid grey;
+    -moz-border-image: url(images/1.png) 30 round round;
+    -webkit-border-image: url(images/1.png) 30 round round; 
+    -o-border-image: url(images/1.png) 30 round round;
+    border-image: url(images/1.png) 30 round round;
           font-size: 20px;
           font-weight: bold;
           vertical-align: baseline;
   }
-
-
-
-
     .animate__fadeInLeftBig{
       animation-duration: 1.5s;
     }

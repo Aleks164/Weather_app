@@ -37,7 +37,6 @@
     weatherInfoWindow.innerHTML = `Температура воздуха в Вашем городе:  ${  temp} &deg;С`;
   }
  	const cityTemp = await currenCityTemp(curCity);
- 	console.log(cityTemp);
  	showWeatherInWindow(cityTemp);
 
 
