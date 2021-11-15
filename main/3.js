@@ -26,7 +26,7 @@
     if (items.length > 10) {
       items.pop();
     }
-    el.innerHTML = `<ol>${items.map((el) => `<li onclick="q(this);" class = "listItem">${el}</li>`).join("")}</ol>`;
+    el.innerHTML = `<ol id = "olList">${items.map((el) => `<li onclick="cityInList(this);" class = "listItem">${el}</li>`).join("")}</ol>`;
   }
   const items = await readList();
   const coordItems = await readCoordList();
@@ -47,6 +47,7 @@
       );
       if (respons.ok) {
         const resp = await respons.json();
+        console.log(resp)
         return resp;
       }
       return cityName
@@ -57,10 +58,11 @@
       if (check) {
         const { temp } = weather.main;
         const city = weather.name;
-        weatherInfoWindowRiht.innerHTML = `Current temperature in ${city} is  ${temp}&deg;С`;
+        weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">Current temperature in ${city} is  ${temp}&deg;С</p>
+        <img id="imgW" src="http://openweathermap.org/img/wn/${weather.weather[0].icon}.png" alt="alternatetext"></div>`;
       }
       else {
-        weatherInfoWindowRiht.innerHTML = `The entered name of the city "${weather}" was not found`
+        weatherInfoWindowRiht.innerHTML = `"${weather}" was not found`
       }
     }
     function cityForList(weather) {
@@ -69,12 +71,12 @@
         const city = weather.name;
         return city
       }
-      return `The entered name of the city "${weather}" was not found`
+      return `"${weather}" was not found`
     }
     function coordForList(weather) {
       const check = ((typeof weather) === 'object');
       if (check) {
-        const coord = [weather.coord.lat,weather.coord.lon];
+        const coord = [weather.coord.lat, weather.coord.lon];
         return coord;
       }
       return [];
@@ -93,13 +95,8 @@
 
   // right window block
 
-  async function q(text) {
+  async function cityInList(text) {
     const { innerText } = text;
-    console.log(innerText);
-
-    const newdrawList = await getWeather(innerText);
-
-    async function getWeather(innerText) {
       const respons = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${innerText}&appid=${API_KEY}`
       );
@@ -107,18 +104,16 @@
         const result = await respons.json();
         const { temp } = result.main;
         const city = result.name;
-        console.log(result);
-        return `Current temperature in ${city} is  ${temp} °С`
+        weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">Current temperature in ${city} is  ${temp}&deg;С</p>
+        <img id="imgW" src="http://openweathermap.org/img/wn/${result.weather[0].icon}.png" alt="alternatetext"></div>`;
       }
-      return innerText
-    };
-    async function refresh(newdrawList) {
-      weatherInfoWindowRiht.innerText = await newdrawList;
+      else {
+        weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">City with name ${innerText}</p></div>`
+      }
     }
-    refresh(newdrawList);
-  }
-// ___________________________________________________________________
-  window.q = q;  
+     
+  // ___________________________________________________________________
+  window.cityInList = cityInList;
 })();
 
 

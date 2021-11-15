@@ -2,17 +2,36 @@
 body {
   background-color: #ffa6a6;
 }
+#userInput {
+  width: 190px;
+}
 #WeatherCityTemp  {
   display: flex;
 }
-ol > li {
-  /*display: flex;*/
-  font-size: 25px;
-}
-  #maindiv {
-    display: flex;
+#maindiv {    
     width: 700px;
   }
+  #hr1 {
+    margin-top: 0px;
+  margin-bottom: 0px;
+  float: left;
+  height:4px;
+  background-color: #0fe7b438;
+  border-width: 0px;
+  width: 400px;
+  }
+  #p_img {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+ 
+  margin-bottom: 5px;
+}
+#imgW{
+  position: absolute;
+  top: 60px;
+  display: block;
+}
   #textdiv {
     display: block;
   }
@@ -24,11 +43,11 @@ ol > li {
     font-weight: bold;
   }
  #form {   
-  margin: 15px;
+  width: 285px;
+  display: inline-block;
+  margin: 5px;
  }
-  li:hover {
-  color: red;
-}
+ 
 #weatherInfocont{
   height: 340px;
   display: block;
@@ -41,14 +60,23 @@ ol > li {
     border-image: url(images/1.png) 10% repeat;
 }
 #weatherInfo {
+  background-color: #fefbd8;
+  float: left;
   height: 100%;
   margin-top: 0px;
   width: 35%;
   display: inline-block;  
+  border-right: 10px solid; 
+  text-decoration: underline; 
+    /* -moz-border-image: url(images/1.png) 30 round round;
+    -webkit-border-image: url(images/1.png) 30 round round; 
+    -o-border-image: url(images/1.png) 30 round round; */
+    border-image: url(images/1.png) 10% repeat;
 }
+
 #map {
   height: 100%;  
-  width: 65%;
+  width: 63.4%;
   display: inline-block;
   background-color: goldenrod;  
 }
@@ -63,27 +91,28 @@ ol > li {
   font-size: 42px;
   text-align: left;
 }
- form {
-  display: flex;
- }
- li {
+#imgW {
+  margin-left: auto;
+    margin-right: auto;
+}
+ 
+#info {
+  display: inline-block;
+  width: 400px;
   background-color: #fefbd8; 
-  text-align: left;
- }
-p {
-  display: block;
-  float: left;
-  width: 700px;
-  background-color: #fefbd8; 
-  text-align: center;     
+  text-align: center;  
   }
   #weatherInfoWindow {
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #fefbd8;
      position: absolute;
        top: 90%;
        right:  0%;
-        height: 40px;
-         width: 240px;
-         
+        height: 60px;
+         width: 240px;         
           border: 2px solid grey;
           -moz-border-image: url(images/1.png) 30 round round;
     -webkit-border-image: url(images/1.png) 30 round round; 
@@ -93,11 +122,12 @@ p {
   }
 
   #weatherInfoWindowRiht {
+    background-color: #efd394;
      position: absolute;
-       top: 21.5%;
-       right:  0%;
-        height: 110px;
-         width: 240px;
+top: 20px;
+left: 418px;
+height: 110px;
+width: 282px;
          border: 2px solid grey;
     -moz-border-image: url(images/1.png) 30 round round;
     -webkit-border-image: url(images/1.png) 30 round round; 
@@ -105,13 +135,36 @@ p {
     border-image: url(images/1.png) 30 round round;
           font-size: 20px;
           font-weight: bold;
-          vertical-align: baseline;
+          vertical-align: middle
   }
-    .animate__fadeInLeftBig{
+  form {
+  display: flex;
+ }
+  li:hover {
+  color: red;
+}
+ li {
+  background-color: #fefbd8; 
+  text-align: left;  
+ }
+ 
+ol > li {
+  /*display: flex;*/
+  font-size: 25px;
+}
+    .animate__fadeInLeft{
       animation-duration: 1.5s;
     }
-    .animate__fadeInRightBig{
-      animation-duration: 1.5s;
+    .animate__fadeInDown{
+      animation-duration: 0.5s;
     }
+    #imgW {
+ animation: imgW 5s infinite;
+ }
+ @keyframes imgW {
+  0%   {left: 10px} 
+  50%  {left: 220px} 
+  100% {left: 10px}
+  }
 
    

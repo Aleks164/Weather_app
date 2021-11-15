@@ -1,17 +1,40 @@
 const formEl = document.querySelector("#button");
+const listItem = document.getElementById("olList")
 var myMap;
 var placemark;
 
-formEl.addEventListener("click", async() => {
-    setTimeout(async function(){
+listItem.addEventListener("click", (el) => {
+    const text = el.target.innerText;
+    let item = localStorage.getItem("inputs");
+    for (let i = 0; i < 10; i++) {
+        if (JSON.parse(item)[i] == text) {
+            const el = localStorage.getItem("coord");
+            setTimeout(async function () {
+                const jI = JSON.parse(el)[i];
+                if (typeof el[0] !== "undefined") {
+                    myMap.geoObjects.remove(placemark);
+                    placemark = new ymaps.Placemark(jI);
+                    myMap.geoObjects.add(placemark);
+                    myMap.setCenter(jI);
+                }
+            }, 200)
+        }
+    }
+});
+
+
+formEl.addEventListener("click", async () => {
+    setTimeout(async function () {
         await checkStoreCoor();
-        myMap.geoObjects.remove(placemark);
-        placemark = new ymaps.Placemark(mapposition);
-        myMap.geoObjects.add(placemark);
-        myMap.setCenter(mapposition);
-        console.log(mapposition);
-    },200)
-     
+        if (typeof mapposition[0] !== "undefined") {
+            myMap.geoObjects.remove(placemark);
+            placemark = new ymaps.Placemark(mapposition);
+            myMap.geoObjects.add(placemark);
+            myMap.setCenter(mapposition);
+            console.log(mapposition);
+        }
+    }, 200)
+
 })
 function readCoordList() {
     const item = localStorage.getItem("coord");
@@ -24,7 +47,7 @@ async function checkStoreCoor() {
 ymaps.ready(async function () {
     await checkStoreCoor();
     myMap = new ymaps.Map('map', {
-        center: [typeof mapposition !== "undefined"? mapposition[0]  : 51.31, typeof mapposition !== "undefined"? mapposition[1]  : 46],
+        center: [typeof mapposition[0] !== "undefined" ? mapposition[0] : 51.31, typeof mapposition[0] !== "undefined" ? mapposition[1] : 46],
         zoom: 8,
         controls: ['zoomControl'],
         behaviors: ['drag']
