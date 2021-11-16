@@ -1,7 +1,15 @@
 const formEl = document.querySelector("#button");
 const listItem = document.getElementById("olList")
 var myMap;
-var placemark;
+
+var mapposition =[];
+var placemark = 
+    {
+        latitude: typeof mapposition[0] !== "undefined" ? mapposition[0] : 51.31,
+        longitude: typeof mapposition[0] !== "undefined" ? mapposition[1] : 46,
+        hintContent: '<div>ул. Литераторов, д. 19</div>',
+        balloonContent: ""
+    };
 
 listItem.addEventListener("click", (el) => {
     const text = el.target.innerText;
@@ -31,7 +39,6 @@ formEl.addEventListener("click", async () => {
             placemark = new ymaps.Placemark(mapposition);
             myMap.geoObjects.add(placemark);
             myMap.setCenter(mapposition);
-            console.log(mapposition);
         }
     }, 200)
 
@@ -40,7 +47,7 @@ function readCoordList() {
     const item = localStorage.getItem("coord");
     return item === null ? [] : JSON.parse(item);
 }
-let mapposition;
+
 async function checkStoreCoor() {
     mapposition = await readCoordList()[0];
 }
@@ -52,27 +59,44 @@ ymaps.ready(async function () {
         controls: ['zoomControl'],
         behaviors: ['drag']
     });
-    function newCity() {
-        if (ymaps.Placemark) {
-            addPlacemark();
-        } else {
-            ymaps.modules.require(['Placemark', 'overlay.Placemark'])
-                .spread(function (Placemark, PlacemarkOverlay) {
-                    ymaps.Placemark = Placemark;
-                    addPlacemark();
-                });
-        }
-    };
-    function addPlacemark() {
-        var center = myMap.getCenter();
-        center[0] = mapposition[0];
-        center[1] = mapposition[1];
-        console.log(center);
-        var placemark = new ymaps.Placemark(center);
-        myMap.geoObjects.add(placemark);
-    }
-    if (typeof mapposition !== "undefined") {
-        newCity();
-        myMap.center = mapposition;
-    }
+    placemark = new ymaps.Placemark([placemark.latitude, placemark.longitude],
+            {
+                hintContent: placemark.hintContent,
+                balloonContent: placemark.balloonContent
+            },
+            {
+                iconLayout: 'default#image',
+                iconImageHref: 'images/arrow.png',
+                iconImageSize: [45, 45],
+                iconImageOffset: [5, -125],
+                // iconImageClipRect: [[415, 0], [461, 57]]
+            });
+
+
+
+    myMap.geoObjects.add(placemark);
+
+    // function newCity() {
+    //     if (ymaps.Placemark) {
+    //         addPlacemark();
+    //     } else {
+    //         ymaps.modules.require(['Placemark', 'overlay.Placemark'])
+    //             .spread(function (Placemark, PlacemarkOverlay) {
+    //                 ymaps.Placemark = Placemark;
+    //                 addPlacemark();
+    //             });
+    //     }
+    // };
+    // function addPlacemark() {
+    //     var center = myMap.getCenter();        
+    //     center[0] = mapposition[0];
+    //     center[1] = mapposition[1];
+    //     console.log(center);
+    //     var placemark = new ymaps.Placemark(center);
+    //     myMap.geoObjects.add(placemark);
+    // }
+    // if (typeof mapposition !== "undefined") {
+    //     newCity();
+    //     myMap.center = mapposition;
+    // }
 });

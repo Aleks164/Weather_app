@@ -9,14 +9,14 @@
     if (response.ok) {
       const city = await response.json();
       const MyCity = city.city;
-      // console.log(MyCity);
+      weatherInfoWindow.innerHTML = `<p id = "curCity">${MyCity}</p>`;
       return MyCity
     }
   };
  
   const curCity = await getLocaion();
   
-  const currenCityTemp = async function getWeatherInCurrentLocation(currenCity) {
+  async function currenCityTemp(currenCity) {
     const response = await fetch(
        `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${currenCity}&appid=${API_KEY}`
     );
@@ -33,8 +33,10 @@
     const city = weatherInfo.name;
     const {temp} = weatherInfo.main;
     console.log(temp);
-
-    weatherInfoWindow.innerHTML = `Температура воздуха в Вашем городе:  ${  temp} &deg;С`;
+    weatherInfoWindow.innerHTML += `<img id="imgWind" src="http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}.png" alt="weathericon"</img><hr><p id = "curTemp">Current temperature in your city is  <b id="tempColor"> ${temp}&deg;С</b></p>`;
+    setTimeout(function () {
+      weatherInfoWindow.style.display = "unset";
+    },1000)
   }
  	const cityTemp = await currenCityTemp(curCity);
  	showWeatherInWindow(cityTemp);
