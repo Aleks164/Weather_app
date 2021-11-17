@@ -1,4 +1,6 @@
-(async function () {
+import { clickOnList } from "./balloon_and_hint.js"
+
+export async function main() {
 
   const API_KEY = "208564fc52a377799242a74d74f824e0";
   const formEl = document.querySelector("form");
@@ -83,10 +85,8 @@
     }
     const citylist = cityForList(weather);
     const coordList = coordForList(weather);
-
     items.unshift(citylist);
     coordItems.unshift(coordList);
-
     saveList(items);
     saveCoordList(coordItems)
     drawList(weather);
@@ -95,8 +95,9 @@
 
   // right window block
 
-  async function cityInList(text) {
+  async function cityInList(text) {    
     const { innerText } = text;
+    clickOnList(innerText);
       const respons = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${innerText}&appid=${API_KEY}`
       );
@@ -114,7 +115,7 @@
      
   // ___________________________________________________________________
   window.cityInList = cityInList;
-})();
+}
 
 
 

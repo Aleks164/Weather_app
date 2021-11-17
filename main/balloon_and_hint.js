@@ -1,12 +1,10 @@
 const formEl = document.querySelector("#button");
-const listItem = document.getElementById("olList")
 var myMap;
-var mapposition =[];
-var placemark; 
+var mapposition = [];
+var placemark;
 
-listItem.addEventListener("click", (el) => {
-    const text = el.target.innerText;
-    console.log(text)
+export function clickOnList(el) {
+    const text = el;
     let item = localStorage.getItem("inputs");
     for (let i = 0; i < 11; i++) {
         if (JSON.parse(item)[i] == text) {
@@ -16,38 +14,38 @@ listItem.addEventListener("click", (el) => {
                 if (typeof el[0] !== "undefined") {
                     myMap.geoObjects.remove(placemark);
                     placemark = new ymaps.Placemark(jI,
-                         {
-                        hintContent: `${jI[0]}, ${jI[1]}`                        
-                    },
-                    {
-                        iconLayout: 'default#image',
-                        iconImageHref: 'images/arrow.png',
-                        iconImageSize: [45, 45],
-                        iconImageOffset: [-47, 5],                        
-                    });
+                        {
+                            hintContent: `${jI[0]}, ${jI[1]}`
+                        },
+                        {
+                            iconLayout: 'default#image',
+                            iconImageHref: 'images/arrow.png',
+                            iconImageSize: [45, 45],
+                            iconImageOffset: [-47, 5],
+                        });
                     myMap.geoObjects.add(placemark);
                     myMap.setCenter(jI);
                 }
             }, 200)
         }
     }
-});
+};
 
-formEl.addEventListener("click", async () => {
+formEl.addEventListener("click", () => {
     setTimeout(async function () {
         await checkStoreCoor();
         if (typeof mapposition[0] !== "undefined") {
             myMap.geoObjects.remove(placemark);
             placemark = new ymaps.Placemark(mapposition,
                 {
-               hintContent: `${mapposition[0]}, ${mapposition[1]}`               
-           },
-           {
-               iconLayout: 'default#image',
-               iconImageHref: 'images/arrow.png',
-               iconImageSize: [45, 45],
-               iconImageOffset: [-47, 5],                        
-           });
+                    hintContent: `${mapposition[0]}, ${mapposition[1]}`
+                },
+                {
+                    iconLayout: 'default#image',
+                    iconImageHref: 'images/arrow.png',
+                    iconImageSize: [45, 45],
+                    iconImageOffset: [-47, 5],
+                });
             myMap.geoObjects.add(placemark);
             myMap.setCenter(mapposition);
         }
@@ -60,9 +58,10 @@ function readCoordList() {
 }
 
 async function checkStoreCoor() {
-    mapposition = await readCoordList()[0]|| [51.31,46];
+    mapposition = await readCoordList()[0] || [51.5667, 46.0333];
 }
-ymaps.ready(async function () {
+ymaps.ready(start);
+async function start() {
     await checkStoreCoor();
     myMap = new ymaps.Map('map', {
         center: [mapposition[0], mapposition[1]],
@@ -71,14 +70,14 @@ ymaps.ready(async function () {
         behaviors: ['drag']
     });
     placemark = new ymaps.Placemark([mapposition[0], mapposition[1]],
-            {
-                hintContent: `${mapposition[0]}, ${mapposition[1]}`                
-            },
-            {
-                iconLayout: 'default#image',
-                iconImageHref: 'images/arrow.png',
-                iconImageSize: [45, 45],
-                iconImageOffset: [-47, 5]                
-            });
-             myMap.geoObjects.add(placemark);
-});
+        {
+            hintContent: `${mapposition[0]}, ${mapposition[1]}`
+        },
+        {
+            iconLayout: 'default#image',
+            iconImageHref: 'images/arrow.png',
+            iconImageSize: [45, 45],
+            iconImageOffset: [-47, 5]
+        });
+    myMap.geoObjects.add(placemark);
+};
