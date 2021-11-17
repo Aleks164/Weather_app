@@ -27,23 +27,27 @@ let field = [
     [1, 1],
     [0, 1]
 ];
+let res = [
+    [],
+    []
+];
 
 function getNextGeneration(field) {
     for (let i = 0; i < field[i].length-1; i++) {
         console.log(i);
         for (let p = 0; p < field[p].length-1; p++) {
-            console.log(field[p].length);
+            console.log(p);
             let num = getNumberOfAliveAround(field, p, i);
             console.log(num);
             let state = field[p][i] !== 0;
             console.log(state);
             let nextSrate = getNextCellState(state, num);
             console.log(nextSrate);
-            field[p][i] = nextSrate ? 1 : 0;
-            console.log(field);
+            res[p][i] = nextSrate ? 1 : 0;
+            console.log(res);
         }       
     }
-    console.log(field);
-    return field;
+    console.log(res);
+    return res;
 }
 console.log(getNextGeneration(field));
