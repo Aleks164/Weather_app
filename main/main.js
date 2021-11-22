@@ -1,2 +1,3 @@
 import { main } from "./3.js"
-main();
+const el = document.querySelector("#container")
+main(el);

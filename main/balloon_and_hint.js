@@ -1,4 +1,3 @@
-const formEl = document.querySelector("#button");
 var myMap;
 var mapposition = [];
 var placemark;
@@ -30,7 +29,8 @@ export function clickOnList(el) {
         }
     }
 };
-
+export function addEventForButtonAfterEl() {
+    const formEl = document.querySelector("#button");
 formEl.addEventListener("click", () => {
     setTimeout(async function () {
         await checkStoreCoor();
@@ -52,6 +52,7 @@ formEl.addEventListener("click", () => {
     }, 200)
 
 })
+}
 function readCoordList() {
     const item = localStorage.getItem("coord");
     return item === null ? [] : JSON.parse(item);
@@ -60,7 +61,10 @@ function readCoordList() {
 async function checkStoreCoor() {
     mapposition = await readCoordList()[0] || [51.5667, 46.0333];
 }
+var ymaps = ymaps||false;
+if(ymaps){
 ymaps.ready(start);
+}
 async function start() {
     await checkStoreCoor();
     myMap = new ymaps.Map('map', {

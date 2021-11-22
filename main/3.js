@@ -1,7 +1,36 @@
-import { clickOnList } from "./balloon_and_hint.js"
+import { clickOnList, addEventForButtonAfterEl } from "./balloon_and_hint.js";
 
-export async function main() {
-
+export async function main(el) {
+  el.innerHTML = `<h1 class="title">Weather</h1>
+  <hr id="hr1">
+<div id="maindiv">
+<div id="textdiv">
+<p id= "info">
+     User can enter data in the input field, and see the list of entered data below. When the page is refreshed (or the browser is closed), the list is saved.
+   The window below displays the weather in your city.
+  </p>
+  <div id="form">
+  <form>
+    <input
+      id="userInput"
+      placeholder="Type city and press enter"
+      required
+      autofocus
+    />
+    <button id="button">Get weather</button>
+  </form>
+  </div>
+  </div>
+  <hr id="hr2">
+  <div id="weatherInfocont">
+  <div id="weatherInfo"></div>
+  <div id="map"></div>
+  </div>
+  <div  class="animate__fadeInLeft" id="weatherInfoWindow"></div>
+  </div>
+  <div class="animate__fadeInDown" id="weatherInfoWindowRiht"><p id= "p_before">Enter name of the city to find out temperature in this city or select a city from the list on the bottom left if the city you are interested is in it</p></div>    
+`
+addEventForButtonAfterEl();
   const API_KEY = "208564fc52a377799242a74d74f824e0";
   const formEl = document.querySelector("form");
   const weatherInfoEl = document.querySelector("#weatherInfo");
