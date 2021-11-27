@@ -1,71 +1,117 @@
-import { main } from "./3";
+import * as weather from "./weatherInfoWindow.js";
 
-describe("createParagraphList", () => {
+describe("getCurrentCityData", () => {
+  let saveWindowFech, el;
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   beforeEach(() => {
-    const el = document.createElement("div");
-    document.body.append(el);
-    main(el);
+    saveWindowFech = window.fetch;
+    window.fetch = jest.fn();
   });
 
   afterEach(() => {
-    document.getElementsByTagName("body")[0].innerHTML = "";
+    window.fetch = saveWindowFech;
   });
-  it("Checking the input field", () => {
-    expect(document.querySelector("#userInput")).toBeTruthy();
+  beforeEach(() => {
+    el = document.createElement("div");
+    el.style.display = "none";
+    document.body.append(el);
   });
-  it("Checking the button", () => {
-    expect(document.querySelector("#button")).toBeTruthy();
-  });
-  // it("Checking the button which should visible when input is not empty", () => {
-  //   const input = document.querySelector("#userInput");
-  //   const button = document.querySelector("#hide");
-  //   const event = new Event("input");
-  //   input.value = "123";
-  //   input.dispatchEvent(event);
-  //   expect(button.style.visibility).toBe("visible");
-  // });
-  it("Checking new <p> after click button", () => {
-    const input = document.querySelector("#userInput");
-    const button = document.querySelector("#button");
-    const divP = document.querySelector("#weatherInfo");
-    const inputText = "test";
-    input.value = inputText;
-    button.click();
-    const p3list = document.querySelector("#olList");
-    const p3listArr = [...p3list];
-    const listLenght = p3listArr.length;
-    expect(listLenght).toBe(1);
-    expect(divP.innerHTML).toContain(inputText);
+  afterEach(() => {
+    document.getElementsByTagName("html")[0].innerHTML = "";
   });
 
-  it("Checking the list <p> should not contain more than 10 elements and have the last elements", () => {
-    const input = document.querySelector("#userInput");
-    const button = document.querySelector("#button");
-    const divP = document.querySelector("#olList");
-    for (let i = 0; i < 3; i++) {
-      input.value = `another ${i}`;
-      button.click();
-    }
-
-    expect(localStorage).toBe(9);
-    input.value = "TEST";
-    button.click();
-    expect(divP.innerHTML).toBe(3);
-
-    // localStorage.clear();
-    // expect(localStorage.length).toBe(0);
-
-    // divP.innerHTML = "";
-    // for (let i = 0; i < 3; i++) {
-    //   input.value = `another ${i}`;
-    //   button.click();
-    // }
-    // expect(divP.childElementCount).toBe(3);
-    // console.log(divP.childElementCount);
-    // expect(divP.innerHTML).toContain("another 6");
-    // expect(divP.innerHTML).toContain("another 5");
-    // expect(divP.innerHTML).toContain("another 4");
-    // expect(divP.innerHTML).toContain("another 3");
-    // expect(divP.innerHTML).toContain("another 2");
+  it("geo fetch should return expected data if promis resolve", async () => {
+    const city = { city: "Saratov" };
+    const url = `https://get.geojs.io/v1/ip/geo.json`;
+    const innerHTMLtext = `<p id="curCity">${city.city}</p>`;
+    window.fetch.mockImplementationOnce(() =>
+      Promise.resolve({ json: () => Promise.resolve(city) })
+    );
+    const result = await weather.getLocaion(el);
+    expect(result).toStrictEqual(city.city);
+    expect(el.innerHTML).toEqual(innerHTMLtext);
+    expect(window.fetch).toHaveBeenCalledWith(url);
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+  });
+  it("geo fetch should return expected data if promis reject", async () => {
+    const url = `https://get.geojs.io/v1/ip/geo.json`;
+    const errorMessage = "Failed to fetch of geo";
+    const innerHTMLtext = `<p id="curCity">${errorMessage}</p>`;
+    window.fetch.mockImplementationOnce(() =>
+      Promise.reject(new Error("Failed to fetch"))
+    );
+    const result = await weather.getLocaion(el);
+    expect(result).toEqual(errorMessage);
+    expect(el.innerHTML).toEqual(innerHTMLtext);
+    expect(window.fetch).toHaveBeenCalledWith(url);
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+  });
+  it("api.openweathermap fetch should return expected data if promis resolve", async () => {
+    const curCity = "Saratov";
+    const openweathermap = { temp: 12 };
+    const API_KEY = "208564fc52a377799242a74d74f824e0";
+    const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
+    const spy = jest.spyOn(weather, "getLocaion");
+    spy.mockReturnValue(curCity);
+    window.fetch.mockImplementationOnce(() =>
+      Promise.resolve({ json: () => Promise.resolve(openweathermap) })
+    );
+    const result = await weather.getCurrenCityTemp();
+    expect(result).toEqual(openweathermap);
+    expect(window.fetch).toHaveBeenCalledWith(url);
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    weather.getLocaion.mockRestore();
+  });
+  it("api.openweathermap fetch should return expected data if promis reject", async () => {
+    const curCity = "Saratov";
+    const API_KEY = "208564fc52a377799242a74d74f824e0";
+    const errorMessage = `Current city '${curCity}' was not found`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
+    const spy = jest.spyOn(weather, "getLocaion");
+    spy.mockReturnValue(curCity);
+    window.fetch.mockImplementationOnce(() =>
+      Promise.reject(new Error("Failed to fetch"))
+    );
+    const result = await weather.getCurrenCityTemp();
+    expect(result).toEqual(errorMessage);
+    expect(window.fetch).toHaveBeenCalledWith(url);
+    expect(window.fetch).toHaveBeenCalledTimes(1);
+    weather.getLocaion.mockRestore();
+  });
+  it("will draw a weather window by adding a weather image and temperature in the text field", async () => {
+    const cityTemp = {
+      main: { temp: 12 },
+      city: "Saratov",
+      weather: [
+        {
+          icon: "04d"
+        }
+      ]
+    };
+    const innerHTMLtext = `<img id=\"imgWind\" src=\"http://openweathermap.org/img/wn/${cityTemp.weather[0].icon}.png\" alt=\"weathericon\" <=\"\" img=\"\"><hr><p id=\"curTemp\">Current temperature in your city is  <b id=\"tempColor\"> ${cityTemp.main.temp}°С</b></p>`;
+    const spy = jest.spyOn(weather, "getCurrenCityTemp");
+    spy.mockReturnValue(cityTemp);
+    await weather.showWeatherInWindow(el);
+    expect(el.innerHTML).toEqual(innerHTMLtext);
+    expect(el.style.display).toEqual("none");
+    await sleep(1001);
+    expect(el.style.display).toEqual("unset");
+    weather.getCurrenCityTemp.mockRestore();
+  });
+  it("will draw a weather window with error text", async () => {
+    const curCity = "Gaduykino";
+    const cityTemp = `Current city '${curCity}' was not found`;
+    const innerHTMLtext = `<p id=\"curCity\">Current city '${curCity}' was not found</p>`;
+    const spy = jest.spyOn(weather, "getCurrenCityTemp");
+    spy.mockReturnValue(cityTemp);
+    await weather.showWeatherInWindow(el);
+    expect(el.innerHTML).toEqual(innerHTMLtext);
+    expect(el.style.display).toEqual("none");
+    await sleep(1001);
+    expect(el.style.display).toEqual("unset");
+    weather.getCurrenCityTemp.mockRestore();
   });
 });
