@@ -10,40 +10,39 @@ export function clickOnList(el) {
   for (let i = 0; i < 11; i++) {
     if (JSON.parse(item)[i] === text) {
       const el = localStorage.getItem("coord");
-      setTimeout(function () {
-        const jI = JSON.parse(el)[i];
-        if (typeof el[0] !== "undefined") {
-          myMap.geoObjects.remove(placemark);
-          placemark = new ymaps.Placemark(
-            jI,
-            {
-              hintContent: `${jI[0]}, ${jI[1]}`
-            },
-            {
-              iconLayout: "default#image",
-              iconImageHref: "images/arrow.png",
-              iconImageSize: [45, 45],
-              iconImageOffset: [-47, 5]
-            }
-          );
-          myMap.geoObjects.add(placemark);
-          myMap.setCenter(jI);
-        }
-      }, 200);
+      // eslint-disable-next-line no-loop-func
+      setTimeout(() => {
+          const jI = JSON.parse(el)[i];
+          if (typeof el[0] !== "undefined") {
+            myMap.geoObjects.remove(placemark);
+            placemark = new ymaps.Placemark(
+              jI,
+              {
+                hintContent: `${jI[0]}, ${jI[1]}`
+              },
+              {
+                iconLayout: "default#image",
+                iconImageHref: "images/arrow.png",
+                iconImageSize: [45, 45],
+                iconImageOffset: [-47, 5]
+              }
+            );
+            myMap.geoObjects.add(placemark);
+            myMap.setCenter(jI);
+          }
+        }, 200);
     }
   }
 }
-export function addEventForButtonAfterEl() {
-  const formEl = document.querySelector("#button");
-  formEl.addEventListener("click", () => {
-    setTimeout(async function () {
-      await checkStoreCoor();
-      if (typeof mapposition[0] !== "undefined") {
+
+export function clickOnButton(loc) {
+  const latitude = loc.coord.lat;
+  const longitude = loc.coord.lon;
         myMap.geoObjects.remove(placemark);
         placemark = new ymaps.Placemark(
-          mapposition,
+          [latitude, longitude],
           {
-            hintContent: `${mapposition[0]}, ${mapposition[1]}`
+            hintContent: [latitude, longitude]
           },
           {
             iconLayout: "default#image",
@@ -53,11 +52,9 @@ export function addEventForButtonAfterEl() {
           }
         );
         myMap.geoObjects.add(placemark);
-        myMap.setCenter(mapposition);
+        myMap.setCenter([latitude, longitude]);
       }
-    }, 200);
-  });
-}
+    
 function readCoordList() {
   const item = localStorage.getItem("coord");
   return item === null ? [] : JSON.parse(item);
@@ -67,11 +64,9 @@ async function checkStoreCoor(coord) {
   mapposition = (await readCoordList()[0]) || coord;
 }
 
-ymaps.ready(start);
-export async function start() {
-  const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
-  let loc = await getLocaion(weatherInfoWindow);
-  let coord = [loc.latitude, loc.longitude];
+ymaps.ready(async () => { 
+  const loc = await getLocaion();
+  const coord = [loc.latitude, loc.longitude];
   await checkStoreCoor(coord);
 
   myMap = new ymaps.Map("map", {
@@ -93,4 +88,4 @@ export async function start() {
     }
   );
   myMap.geoObjects.add(placemark);
-}
+})

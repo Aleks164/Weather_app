@@ -1,3 +1,5 @@
+import { clickOnButton } from "../balloon_and_hint.js";
+
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 export async function getWeather(cityName) {
   const respons = await fetch(
@@ -6,6 +8,7 @@ export async function getWeather(cityName) {
   if (respons.ok) {
     const resp = await respons.json();
     console.log(resp);
+    await clickOnButton(resp);
     return resp;
   }
   return cityName;

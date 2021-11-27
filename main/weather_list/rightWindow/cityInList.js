@@ -1,4 +1,5 @@
 import { clickOnList } from "../../balloon_and_hint.js";
+
 const weatherInfoWindowRiht = document.querySelector("#weatherInfoWindowRiht");
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 

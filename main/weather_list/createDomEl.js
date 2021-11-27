@@ -9,8 +9,8 @@ import { getWeather } from "./getWeather.js";
 import { cityForList } from "./cityForList.js";
 import { coordForList } from "./coordForList.js";
 import { drawList } from "./drawList.js";
-import { addEventForButtonAfterEl } from "../balloon_and_hint.js";
 import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow.js";
+// eslint-disable-next-line import/prefer-default-export
 export async function crateDomEl(el) {
   el.innerHTML = `<h1 class="title">Weather</h1>
   <hr id="hr1">
@@ -41,8 +41,7 @@ export async function crateDomEl(el) {
   </div>
   <div class="animate__fadeInDown" id="weatherInfoWindowRiht"><p id= "p_before">Enter name of the city to find out temperature in this city or select a city from the list on the bottom left if the city you are interested is in it</p></div>    
 `;
-  addEventForButtonAfterEl();
-
+  
   const formEl = document.querySelector("form");
   const weatherInfoEl = document.querySelector("#weatherInfo");
   const weatherInfoWindowRiht = document.querySelector(
