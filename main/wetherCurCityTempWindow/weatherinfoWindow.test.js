@@ -1,6 +1,6 @@
-import * as weather from "./weatherInfoWindow.js";
+import * as weather from "./weatherInfoWindow";
 
-describe("getCurrentCityData", () => {
+describe("weatherInfoWindow", () => {
   let saveWindowFech, el;
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));

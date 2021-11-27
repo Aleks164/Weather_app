@@ -1,3 +1,5 @@
+import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow.js";
+
 var myMap;
 var mapposition = [];
 var placemark;
@@ -6,7 +8,7 @@ export function clickOnList(el) {
   const text = el;
   let item = localStorage.getItem("inputs");
   for (let i = 0; i < 11; i++) {
-    if (JSON.parse(item)[i] == text) {
+    if (JSON.parse(item)[i] === text) {
       const el = localStorage.getItem("coord");
       setTimeout(function () {
         const jI = JSON.parse(el)[i];
@@ -61,13 +63,17 @@ function readCoordList() {
   return item === null ? [] : JSON.parse(item);
 }
 
-async function checkStoreCoor() {
-  mapposition = (await readCoordList()[0]) || [51.5667, 46.0333];
+async function checkStoreCoor(coord) {
+  mapposition = (await readCoordList()[0]) || coord;
 }
 
 ymaps.ready(start);
-async function start() {
-  await checkStoreCoor();
+export async function start() {
+  const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
+  let loc = await getLocaion(weatherInfoWindow);
+  let coord = [loc.latitude, loc.longitude];
+  await checkStoreCoor(coord);
+
   myMap = new ymaps.Map("map", {
     center: [mapposition[0], mapposition[1]],
     zoom: 8,
