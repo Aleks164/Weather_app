@@ -1,78 +1,91 @@
-const formEl = document.querySelector("#button");
-const listItem = document.getElementById("olList")
+import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow.js";
+
 var myMap;
+var mapposition = [];
 var placemark;
 
-listItem.addEventListener("click", (el) => {
-    const text = el.target.innerText;
-    let item = localStorage.getItem("inputs");
-    for (let i = 0; i < 10; i++) {
-        if (JSON.parse(item)[i] == text) {
-            const el = localStorage.getItem("coord");
-            setTimeout(async function () {
-                const jI = JSON.parse(el)[i];
-                if (typeof el[0] !== "undefined") {
-                    myMap.geoObjects.remove(placemark);
-                    placemark = new ymaps.Placemark(jI);
-                    myMap.geoObjects.add(placemark);
-                    myMap.setCenter(jI);
-                }
-            }, 200)
+export function clickOnList(el) {
+  const text = el;
+  let item = localStorage.getItem("inputs");
+  for (let i = 0; i < 11; i++) {
+    if (JSON.parse(item)[i] === text) {
+      const el = localStorage.getItem("coord");
+      // eslint-disable-next-line no-loop-func
+      setTimeout(() => {
+        const jI = JSON.parse(el)[i];
+        if (typeof el[0] !== "undefined") {
+          myMap.geoObjects.remove(placemark);
+          placemark = new ymaps.Placemark(
+            jI,
+            {
+              hintContent: `${jI[0]}, ${jI[1]}`
+            },
+            {
+              iconLayout: "default#image",
+              iconImageHref: "images/arrow.png",
+              iconImageSize: [45, 45],
+              iconImageOffset: [-47, 5]
+            }
+          );
+          myMap.geoObjects.add(placemark);
+          myMap.setCenter(jI);
         }
+      }, 200);
     }
-});
+  }
+}
 
+export function showCityOnMapAfterClickOnButton(loc) {
+  const latitude = loc.coord.lat;
+  const longitude = loc.coord.lon;
+  myMap.geoObjects.remove(placemark);
+  placemark = new ymaps.Placemark(
+    [latitude, longitude],
+    {
+      hintContent: [latitude, longitude]
+    },
+    {
+      iconLayout: "default#image",
+      iconImageHref: "images/arrow.png",
+      iconImageSize: [45, 45],
+      iconImageOffset: [-47, 5]
+    }
+  );
+  myMap.geoObjects.add(placemark);
+  myMap.setCenter([latitude, longitude]);
+}
 
-formEl.addEventListener("click", async () => {
-    setTimeout(async function () {
-        await checkStoreCoor();
-        if (typeof mapposition[0] !== "undefined") {
-            myMap.geoObjects.remove(placemark);
-            placemark = new ymaps.Placemark(mapposition);
-            myMap.geoObjects.add(placemark);
-            myMap.setCenter(mapposition);
-            console.log(mapposition);
-        }
-    }, 200)
-
-})
 function readCoordList() {
-    const item = localStorage.getItem("coord");
-    return item === null ? [] : JSON.parse(item);
+  const item = localStorage.getItem("coord");
+  return item === null ? [] : JSON.parse(item);
 }
-let mapposition;
-async function checkStoreCoor() {
-    mapposition = await readCoordList()[0];
+
+async function checkStoreCoor(coord) {
+  mapposition = (await readCoordList()[0]) || coord;
 }
-ymaps.ready(async function () {
-    await checkStoreCoor();
-    myMap = new ymaps.Map('map', {
-        center: [typeof mapposition[0] !== "undefined" ? mapposition[0] : 51.31, typeof mapposition[0] !== "undefined" ? mapposition[1] : 46],
-        zoom: 8,
-        controls: ['zoomControl'],
-        behaviors: ['drag']
-    });
-    function newCity() {
-        if (ymaps.Placemark) {
-            addPlacemark();
-        } else {
-            ymaps.modules.require(['Placemark', 'overlay.Placemark'])
-                .spread(function (Placemark, PlacemarkOverlay) {
-                    ymaps.Placemark = Placemark;
-                    addPlacemark();
-                });
-        }
-    };
-    function addPlacemark() {
-        var center = myMap.getCenter();
-        center[0] = mapposition[0];
-        center[1] = mapposition[1];
-        console.log(center);
-        var placemark = new ymaps.Placemark(center);
-        myMap.geoObjects.add(placemark);
+
+ymaps.ready(async () => {
+  const loc = await getLocaion();
+  const coord = [loc.latitude, loc.longitude];
+  await checkStoreCoor(coord);
+
+  myMap = new ymaps.Map("map", {
+    center: [mapposition[0], mapposition[1]],
+    zoom: 8,
+    controls: ["zoomControl"],
+    behaviors: ["drag"]
+  });
+  placemark = new ymaps.Placemark(
+    [mapposition[0], mapposition[1]],
+    {
+      hintContent: `${mapposition[0]}, ${mapposition[1]}`
+    },
+    {
+      iconLayout: "default#image",
+      iconImageHref: "images/arrow.png",
+      iconImageSize: [45, 45],
+      iconImageOffset: [-47, 5]
     }
-    if (typeof mapposition !== "undefined") {
-        newCity();
-        myMap.center = mapposition;
-    }
-});
+  );
+  myMap.geoObjects.add(placemark);
+})
