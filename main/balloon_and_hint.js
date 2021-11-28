@@ -35,7 +35,7 @@ export function clickOnList(el) {
   }
 }
 
-export function clickOnButton(loc) {
+export function showCityOnMapAfterClickOnButton(loc) {
   const latitude = loc.coord.lat;
   const longitude = loc.coord.lon;
   myMap.geoObjects.remove(placemark);
