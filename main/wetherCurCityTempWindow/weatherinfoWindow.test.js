@@ -26,26 +26,22 @@ describe("weatherInfoWindow", () => {
   it("geo fetch should return expected data if promis resolve", async () => {
     const city = { city: "Saratov" };
     const url = `https://get.geojs.io/v1/ip/geo.json`;
-    const innerHTMLtext = `<p id="curCity">${city.city}</p>`;
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(city) })
     );
-    const result = await weather.getLocaion(el);
-    expect(result).toStrictEqual(city.city);
-    expect(el.innerHTML).toEqual(innerHTMLtext);
+    const result = await weather.getLocaion();
+    expect(result).toStrictEqual(city);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);
   });
   it("geo fetch should return expected data if promis reject", async () => {
     const url = `https://get.geojs.io/v1/ip/geo.json`;
     const errorMessage = "Failed to fetch of geo";
-    const innerHTMLtext = `<p id="curCity">${errorMessage}</p>`;
     window.fetch.mockImplementationOnce(() =>
       Promise.reject(new Error("Failed to fetch"))
     );
-    const result = await weather.getLocaion(el);
+    const result = await weather.getLocaion();
     expect(result).toEqual(errorMessage);
-    expect(el.innerHTML).toEqual(innerHTMLtext);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);
   });

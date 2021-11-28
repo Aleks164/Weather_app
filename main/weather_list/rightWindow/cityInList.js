@@ -11,9 +11,7 @@ async function cityInList(text) {
   );
   if (respons.ok) {
     const result = await respons.json();
-    const { temp } = result.main;
-    const city = result.name;
-    weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">Current temperature in ${city} is  ${temp}&deg;С</p>
+    weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">Current temperature in ${result.name} is  ${result.main.temp}&deg;С</p>
         <img id="imgW" src="http://openweathermap.org/img/wn/${result.weather[0].icon}.png" alt="weathericon"></div>`;
   } else {
     weatherInfoWindowRiht.innerHTML = `</div><p id= "p_img">City with name ${innerText}</p></div>`;
