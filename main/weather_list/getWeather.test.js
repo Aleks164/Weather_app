@@ -1,4 +1,4 @@
-import getWeather from "./getWeather";
+import { getWeather } from "./getWeather";
 
 describe("weatherInfoWindow", () => {
     let saveWindowFech;
@@ -34,10 +34,9 @@ describe("weatherInfoWindow", () => {
         window.fetch.mockImplementationOnce(() =>
             Promise.reject(new Error("Failed to fetch"))
         );
-        const result = await getCurrenCityTemp();
+        const result = await getWeather(curCity);
         expect(result).toEqual(errorMessage);
         expect(window.fetch).toHaveBeenCalledWith(url);
         expect(window.fetch).toHaveBeenCalledTimes(1);
-
     });
 });

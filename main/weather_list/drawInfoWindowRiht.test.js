@@ -1,5 +1,6 @@
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
 
+let el;
 describe("drawInfoWindowRiht", () => {
     beforeEach(() => {
         el = document.createElement("div");
@@ -12,16 +13,18 @@ describe("drawInfoWindowRiht", () => {
         const weather = {
             main: { temp: 2.34 },
             name: "Saratov",
-            weather: {
-                icon: "04n"
-            }
-        }
-        const inner = '<p id="p_img">Current temperature in Saratov is  2.34°С</p><img id="imgW" src="http://openweathermap.org/img/wn/04n.png" alt="alternatetext">';
+            weather: [
+                {
+                    icon: "04n"
+                }
+            ]
+        };
+        const inner = '<p id="p_img">Current temperature in Saratov is  2.34°С</p>';
         drawInfoWindowRiht(weather, el);
         expect(el.innerHTML).toContain(inner);
     });
     it("it should draw the right window with the text that the entered city was not found", async () => {
-        const weather = "Zaratov"
+        const weather = "Zaratov";
         const inner = `"${weather}" was not found`;
         drawInfoWindowRiht(weather, el);
         expect(el.innerHTML).toContain(inner);
