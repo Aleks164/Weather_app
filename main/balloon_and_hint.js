@@ -12,25 +12,25 @@ export function clickOnList(el) {
       const el = localStorage.getItem("coord");
       // eslint-disable-next-line no-loop-func
       setTimeout(() => {
-          const jI = JSON.parse(el)[i];
-          if (typeof el[0] !== "undefined") {
-            myMap.geoObjects.remove(placemark);
-            placemark = new ymaps.Placemark(
-              jI,
-              {
-                hintContent: `${jI[0]}, ${jI[1]}`
-              },
-              {
-                iconLayout: "default#image",
-                iconImageHref: "images/arrow.png",
-                iconImageSize: [45, 45],
-                iconImageOffset: [-47, 5]
-              }
-            );
-            myMap.geoObjects.add(placemark);
-            myMap.setCenter(jI);
-          }
-        }, 200);
+        const jI = JSON.parse(el)[i];
+        if (typeof el[0] !== "undefined") {
+          myMap.geoObjects.remove(placemark);
+          placemark = new ymaps.Placemark(
+            jI,
+            {
+              hintContent: `${jI[0]}, ${jI[1]}`
+            },
+            {
+              iconLayout: "default#image",
+              iconImageHref: "images/arrow.png",
+              iconImageSize: [45, 45],
+              iconImageOffset: [-47, 5]
+            }
+          );
+          myMap.geoObjects.add(placemark);
+          myMap.setCenter(jI);
+        }
+      }, 200);
     }
   }
 }
@@ -38,23 +38,23 @@ export function clickOnList(el) {
 export function clickOnButton(loc) {
   const latitude = loc.coord.lat;
   const longitude = loc.coord.lon;
-        myMap.geoObjects.remove(placemark);
-        placemark = new ymaps.Placemark(
-          [latitude, longitude],
-          {
-            hintContent: [latitude, longitude]
-          },
-          {
-            iconLayout: "default#image",
-            iconImageHref: "images/arrow.png",
-            iconImageSize: [45, 45],
-            iconImageOffset: [-47, 5]
-          }
-        );
-        myMap.geoObjects.add(placemark);
-        myMap.setCenter([latitude, longitude]);
-      }
-    
+  myMap.geoObjects.remove(placemark);
+  placemark = new ymaps.Placemark(
+    [latitude, longitude],
+    {
+      hintContent: [latitude, longitude]
+    },
+    {
+      iconLayout: "default#image",
+      iconImageHref: "images/arrow.png",
+      iconImageSize: [45, 45],
+      iconImageOffset: [-47, 5]
+    }
+  );
+  myMap.geoObjects.add(placemark);
+  myMap.setCenter([latitude, longitude]);
+}
+
 function readCoordList() {
   const item = localStorage.getItem("coord");
   return item === null ? [] : JSON.parse(item);
@@ -64,7 +64,7 @@ async function checkStoreCoor(coord) {
   mapposition = (await readCoordList()[0]) || coord;
 }
 
-ymaps.ready(async () => { 
+ymaps.ready(async () => {
   const loc = await getLocaion();
   const coord = [loc.latitude, loc.longitude];
   await checkStoreCoor(coord);

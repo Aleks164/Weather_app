@@ -8,7 +8,7 @@ import { drawCityList } from "./drawCityList.js";
 import { getWeather } from "./getWeather.js";
 import { cityForList } from "./cityForList.js";
 import { coordForList } from "./coordForList.js";
-import { drawList } from "./drawList.js";
+import { drawInfoWindowRiht } from "./drawInfoWindowRiht.js";
 import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow.js";
 // eslint-disable-next-line import/prefer-default-export
 export async function crateDomEl(el) {
@@ -41,7 +41,7 @@ export async function crateDomEl(el) {
   </div>
   <div class="animate__fadeInDown" id="weatherInfoWindowRiht"><p id= "p_before">Enter name of the city to find out temperature in this city or select a city from the list on the bottom left if the city you are interested is in it</p></div>    
 `;
-  
+
   const formEl = document.querySelector("form");
   const weatherInfoEl = document.querySelector("#weatherInfo");
   const weatherInfoWindowRiht = document.querySelector(
@@ -50,9 +50,8 @@ export async function crateDomEl(el) {
   const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
   const items = await readList();
   const coordItems = await readCoordList();
-
   drawCityList(weatherInfoEl, items);
-  await showWeatherInWindow(weatherInfoWindow);//  нужен ли await или это костыль?
+  await showWeatherInWindow(weatherInfoWindow);//  нужен ли await?
 
   formEl.addEventListener("submit", async (ev) => {
     ev.preventDefault();
@@ -68,7 +67,7 @@ export async function crateDomEl(el) {
     coordItems.unshift(coordList);
     saveList(items);
     saveCoordList(coordItems);
-    drawList(weather, weatherInfoWindowRiht);
+    drawInfoWindowRiht(weather, weatherInfoWindowRiht);
     drawCityList(weatherInfoEl, items);
   });
 }
