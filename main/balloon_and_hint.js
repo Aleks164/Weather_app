@@ -88,4 +88,4 @@ ymaps.ready(async () => {
     }
   );
   myMap.geoObjects.add(placemark);
-})
+});

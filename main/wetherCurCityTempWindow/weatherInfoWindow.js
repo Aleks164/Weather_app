@@ -22,7 +22,9 @@ export async function getLocaion(cityCache) {
 export async function getCurrenCityTemp() {
   const curCity = await weather.getLocaion();
   try {
-    if (curCity === "Failed to fetch of geo") { throw new Error("Failed to fetch of geo") };
+    if (curCity === "Failed to fetch of geo") {
+      throw new Error("Failed to fetch of geo");
+    }
     const response = await window.fetch(
       `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity.city}&appid=${API_KEY}`
     );
@@ -41,7 +43,6 @@ export async function showWeatherInWindow(weatherInfoWindow) {
       weatherInfoWindow.style.display = "unset";
     }, 1000);
   } else if (cityTemp.main.temp) {
-    console.log(cityTemp)
     weatherInfoWindow.innerHTML = `<p id = "curCity">${cityTemp.name}</p><img id="imgWind" src="http://openweathermap.org/img/wn/${cityTemp.weather[0].icon}.png" alt="weathericon"</img><hr><p id = "curTemp">Current temperature in your city is  <b id="tempColor"> ${cityTemp.main.temp}&deg;С</b></p>`;
     setTimeout(() => {
       weatherInfoWindow.style.display = "unset";

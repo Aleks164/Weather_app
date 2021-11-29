@@ -47,7 +47,7 @@ describe("weatherInfoWindow", () => {
     expect(window.fetch).toHaveBeenCalledTimes(1);
   });
   it("api.openweathermap fetch should return expected data if promis resolve", async () => {
-    const curCity = { "city": "Saratov" };
+    const curCity = { city: "Saratov" };
     const openweathermap = { temp: 12 };
     const API_KEY = "208564fc52a377799242a74d74f824e0";
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity.city}&appid=${API_KEY}`;
@@ -83,7 +83,8 @@ describe("weatherInfoWindow", () => {
         }
       ]
     };
-    const innerHTMLtext = "<p id=\"curCity\">Saratov</p><img id=\"imgWind\" src=\"http://openweathermap.org/img/wn/04d.png\" alt=\"weathericon\" <=\"\" img=\"\"><hr><p id=\"curTemp\">Current temperature in your city is  <b id=\"tempColor\"> 12°С</b></p>";
+    const innerHTMLtext =
+      '<p id="curCity">Saratov</p><img id="imgWind" src="http://openweathermap.org/img/wn/04d.png" alt="weathericon" <="" img=""><hr><p id="curTemp">Current temperature in your city is  <b id="tempColor"> 12°С</b></p>';
     const spy = jest.spyOn(weather, "getCurrenCityTemp");
     spy.mockReturnValue(cityTemp);
     await weather.showWeatherInWindow(el);
@@ -95,7 +96,8 @@ describe("weatherInfoWindow", () => {
   });
   it("will draw a weather window with error text", async () => {
     const errorMessage = "Failed to fetch of geo";
-    const innerHTMLtext = "<p id=\"curCity\">Failed to fetch of geo</p><p id=\"curTemp\">Viewing the weather in your city is currently unavailable</p>";
+    const innerHTMLtext =
+      '<p id="curCity">Failed to fetch of geo</p><p id="curTemp">Viewing the weather in your city is currently unavailable</p>';
     const spy = jest.spyOn(weather, "getCurrenCityTemp");
     spy.mockReturnValue(errorMessage);
     await weather.showWeatherInWindow(el);

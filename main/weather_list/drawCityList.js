@@ -4,7 +4,8 @@ export async function drawCityList(el, items) {
   }
   el.innerHTML = `<ol id = "olList">${items
     .map(
-      (item) => `<li onclick="cityInList(this);" class = "listItem">${item}</li>`
+      (item) =>
+        `<li onclick="cityInList(this.innerHTML);" class = "listItem">${item}</li>`
     )
     .join("")}</ol>`;
 }

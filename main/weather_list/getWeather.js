@@ -8,7 +8,7 @@ export async function getWeather(cityName) {
     );
 
     const resp = await respons.json();
-    showCityOnMapAfterClickOnButton(resp); // - нужно ли мокать эту функцию?
+    showCityOnMapAfterClickOnButton(resp);
     return resp;
   } catch (e) {
     return cityName;
