@@ -1,6 +1,17 @@
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 import * as ymap from "../../balloon_and_hint.js";
 
+
+jest.mock("../../balloon_and_hint.js", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      clickOnList: () => {
+        return 'mock'
+      }
+    };
+  });
+});
+
 describe("cityInList", () => {
   let saveWindowFech, el;
   const API_KEY = "208564fc52a377799242a74d74f824e0";
@@ -32,8 +43,8 @@ describe("cityInList", () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
     const inner = `<div><p id=\"p_img\">Current temperature in Saratov is  2.34°С</p>
 <img id=\"imgW\" src=\"http://openweathermap.org/img/wn/04n.png\" alt=\"weathericon\"></div>`;
-    const spy = jest.spyOn(ymap, "clickOnList");
-    spy.mockReturnValue("mocked");
+    // const spy = jest.spyOn(ymap, "clickOnList");
+    // spy.mockReturnValue("mocked");
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(result) })
     );
@@ -42,7 +53,7 @@ describe("cityInList", () => {
     );
 
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
-    expect(ymap.clickOnList()).toBe("mocked");
+    expect(ymap.clickOnList).toBe("mock");
     expect(weatherInfoWindowRiht.innerHTML).toContain(inner);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);
