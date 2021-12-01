@@ -1,16 +1,9 @@
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
-import * as ymap from "../../balloon_and_hint.js";
+
+const clickOnList = require("../../balloon_and_hint.js");
+jest.mock("../../balloon_and_hint.js", () => jest.fn());
 
 
-jest.mock("../../balloon_and_hint.js", () => {
-  return jest.fn().mockImplementation(() => {
-    return {
-      clickOnList: () => {
-        return 'mock'
-      }
-    };
-  });
-});
 
 describe("cityInList", () => {
   let saveWindowFech, el;
@@ -45,19 +38,27 @@ describe("cityInList", () => {
 <img id=\"imgW\" src=\"http://openweathermap.org/img/wn/04n.png\" alt=\"weathericon\"></div>`;
     // const spy = jest.spyOn(ymap, "clickOnList");
     // spy.mockReturnValue("mocked");
+
+
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(result) })
     );
     let weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
-
+    clickOnList.mockImplementationOnce(() => 1);
+    const q = clickOnList();
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
-    expect(ymap.clickOnList).toBe("mock");
+
+
+    expect(q).toBe(1);
+    expect(window.fetch).toHaveBeenCalledTimes(1);
     expect(weatherInfoWindowRiht.innerHTML).toContain(inner);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);
-    spy.mockRestore();
+
+    // spy.mockRestore();
+    clickOnList.mockRestore();
   });
   it("api.openweathermap fetch should return expected data if promis reject", async () => {
     const curCity = "Zaratov";
