@@ -1,4 +1,4 @@
-import clickOnList from "../../balloon_and_hint.js";
+import { clickOnList } from "../../balloon_and_hint.js";
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 
 export async function showWeatherAfterClickOnList(text, weatherInfoWindowRiht) {

@@ -1,9 +1,11 @@
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 
-const clickOnList = require("../../balloon_and_hint.js");
-jest.mock("../../balloon_and_hint.js", () => jest.fn());
-
-
+import { clickOnList } from "../../balloon_and_hint.js";
+jest.mock("../../balloon_and_hint.js", () => {
+  return {
+    clickOnList: jest.fn(() => 'mocked'),
+  };
+});
 
 describe("cityInList", () => {
   let saveWindowFech, el;
@@ -46,12 +48,12 @@ describe("cityInList", () => {
     let weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
-    clickOnList.mockImplementationOnce(() => 1);
-    const q = clickOnList();
+    // clickOnList.mockImplementationOnce(() => 1);
+    // const mockedclickOnList = clickOnList();
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
 
 
-    expect(q).toBe(1);
+    expect(clickOnList()).toBe("mocked");
     expect(window.fetch).toHaveBeenCalledTimes(1);
     expect(weatherInfoWindowRiht.innerHTML).toContain(inner);
     expect(window.fetch).toHaveBeenCalledWith(url);
