@@ -1,4 +1,4 @@
-import { showCityOnMapAfterClickOnButton } from "../balloon_and_hint.js";
+import { showCityOnMapAfterClickOnButton } from "../drawYmap.js";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 export async function getWeather(cityName) {

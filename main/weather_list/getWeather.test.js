@@ -1,8 +1,8 @@
 import { getWeather } from "./getWeather";
-import { showCityOnMapAfterClickOnButton } from "../balloon_and_hint.js";
-jest.mock("../balloon_and_hint.js", () => {
+import { showCityOnMapAfterClickOnButton } from "../drawYmap.js";
+jest.mock("../drawYmap.js", () => {
   return {
-    showCityOnMapAfterClickOnButton: jest.fn(() => 'mocked'),
+    showCityOnMapAfterClickOnButton: jest.fn(() => "mocked")
   };
 });
 describe("getWeather", () => {

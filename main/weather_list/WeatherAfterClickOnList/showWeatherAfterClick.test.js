@@ -1,9 +1,9 @@
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 
-import { clickOnList } from "../../balloon_and_hint.js";
-jest.mock("../../balloon_and_hint.js", () => {
+import { clickOnList } from "../../drawYmap.js";
+jest.mock("../../drawYmap.js", () => {
   return {
-    clickOnList: jest.fn(() => 'mocked'),
+    clickOnList: jest.fn(() => "mocked")
   };
 });
 
@@ -41,7 +41,6 @@ describe("cityInList", () => {
     // const spy = jest.spyOn(ymap, "clickOnList");
     // spy.mockReturnValue("mocked");
 
-
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(result) })
     );
@@ -51,7 +50,6 @@ describe("cityInList", () => {
     // clickOnList.mockImplementationOnce(() => 1);
     // const mockedclickOnList = clickOnList();
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
-
 
     expect(clickOnList()).toBe("mocked");
     expect(window.fetch).toHaveBeenCalledTimes(1);

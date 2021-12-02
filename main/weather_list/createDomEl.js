@@ -5,10 +5,10 @@ import {
   saveCoordList
 } from "./localStorage_read_save.js";
 import { drawCityList } from "./drawCityList.js";
-import { getWeather } from "./getWeather.js";
-import { cityForList } from "./cityForList.js";
-import { coordForList } from "./coordForList.js";
-import { drawInfoWindowRiht } from "./drawInfoWindowRiht.js";
+// import { getWeather } from "./getWeather.js";
+// import { cityForList } from "./cityForList.js";
+// import { coordForList } from "./coordForList.js";
+// import { drawInfoWindowRiht } from "./drawInfoWindowRiht.js";
 import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow.js";
 // eslint-disable-next-line import/prefer-default-export
 export async function crateDomEl(el) {
@@ -51,23 +51,22 @@ export async function crateDomEl(el) {
   const items = await readList();
   const coordItems = await readCoordList();
   drawCityList(weatherInfoEl, items);
-  await showWeatherInWindow(weatherInfoWindow);//  нужен ли await?
+  await showWeatherInWindow(weatherInfoWindow);
+  // formEl.addEventListener("submit", async (ev) => {
+  //   ev.preventDefault();
+  //   const formElement = ev.target;
+  //   const inputEl = formElement.querySelector("input");
+  //   const cityName = inputEl.value;
+  //   inputEl.value = "";
+  //   const weather = await getWeather(cityName);
 
-  formEl.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const formElement = ev.target;
-    const inputEl = formElement.querySelector("input");
-    const cityName = inputEl.value;
-    inputEl.value = "";
-    const weather = await getWeather(cityName);
-
-    const citylist = cityForList(weather);
-    const coordList = coordForList(weather);
-    items.unshift(citylist);
-    coordItems.unshift(coordList);
-    saveList(items);
-    saveCoordList(coordItems);
-    drawInfoWindowRiht(weather, weatherInfoWindowRiht);
-    drawCityList(weatherInfoEl, items);
-  });
+  //   const citylist = cityForList(weather);
+  //   const coordList = coordForList(weather);
+  //   items.unshift(citylist);
+  //   coordItems.unshift(coordList);
+  //   saveList(items);
+  //   saveCoordList(coordItems);
+  //   drawInfoWindowRiht(weather, weatherInfoWindowRiht);
+  //   drawCityList(weatherInfoEl, items);
+  // });
 }
