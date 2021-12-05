@@ -1,21 +1,35 @@
 import { crateDomEl } from "./createDomEl.js";
 import * as weather from "../wetherCurCityTempWindow/weatherInfoWindow.js";
-// jest.mock("../../drawYmap.js", () => {
-//     return {
-//         clickOnList: jest.fn(() => "mocked")
-//     };
-// });
-jest.mock("./localStorage_read_save.js", () => {
-    return {
+
+
+jest.mock("../drawYmap.js", () => ({
+        clickOnList: jest.fn(() => "mocked"),
+        showCityOnMapAfterClickOnButton: jest.fn(() => "mocked"),
+    }));
+   const mockStorage = {};   
+
+jest.mock("./localStorage_read_save.js", () => ({
         readList: jest.fn().mockResolvedValue(["Saratov", "NeSaratov"]),
         readCoordList: jest.fn().mockResolvedValue([51.566, 46.0333], [66.566, 44.344]),
-        //   saveList,
-        //   saveCoordList
-    };
-});
-import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow.js";
-
-
+          saveList: jest.fn((value) => {
+            mockStorage.inputs = value;
+          }),
+          saveCoordList: jest.fn((value) => {
+            mockStorage.coord = value;
+          }),
+    }));
+    const getweather = {
+        "main": { "temp": 2.34 },
+        "name": "Saratov",
+        "weather": [{ "icon": "04n" }],
+        "coord": {
+            "lat": 55.7522,
+            "lon": 37.6156,
+                },
+      };
+    jest.mock("./getWeather.js", () => ({
+        getWeather: jest.fn().mockResolvedValue(getweather),
+    }));
 
 describe("crateDomEl", () => {
     let el;
@@ -44,16 +58,40 @@ describe("crateDomEl", () => {
         spyGetCurrenCityTemp.mockReturnValue(cityTemp);
 
         const historyCityList = "<ol id=\"olList\"><li onclick=\"cityInList(this.innerHTML);\" class=\"listItem\">Saratov</li><li onclick=\"cityInList(this.innerHTML);\" class=\"listItem\">NeSaratov</li></ol>"
-
-
+        
         await crateDomEl(el);
-        const weatherInfoEl = document.querySelector("#weatherInfo");
+        let weatherInfoEl = document.querySelector("#weatherInfo");
         const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
-
+                
         expect(weatherInfoEl.innerHTML).toBe(historyCityList);
         expect(weatherInfoWindow.innerHTML).toBe(showWeatherInWindowInnerHTML);
-        //   expect(window.fetch).toHaveBeenCalledWith(url);
-        //   expect(window.fetch).toHaveBeenCalledTimes(1);
+        
+        const input = document.querySelector("#userInput");    
+        const inputText = "Saratov";
+        input.value = inputText;
+        const button = document.querySelector("#button");
+        // button.click();
+        const event = new Event("click");    
+        button.dispatchEvent(event);
+        
+        setTimeout(()=> {
+        weatherInfoEl = document.querySelector("#weatherInfo");
+        const weatherInfoWindowRiht = document.querySelector("#weatherInfoWindowRiht");
+        const historyCityListAfterClick = '<ol id="olList"><li onclick="cityInList(this.innerHTML);" class="listItem">Saratov</li><li onclick="cityInList(this.innerHTML);" class="listItem">Saratov</li><li onclick="cityInList(this.innerHTML);" class="listItem">NeSaratov</li></ol>';
+        const rightWindowInnerAfterClick = '<p id="p_img">Current temperature in Saratov is  2.34°С</p><img id="imgW" src="http://openweathermap.org/img/wn/04n.png" alt="alternatetext">';
+        // expect(saveList()).toHaveBeenCalledWith("hhh");
+
+        // expect(weatherInfoWindowRiht.innerHTML).toBe(rightWindowInner);
+        console.log("test", weatherInfoEl.innerHTML);
+        // const olList = document.querySelector("#olList");
+        // expect(document.querySelector("#userInput")).toBeTruthy();
+        // expect(olList.childElementCount).toBe(2);
+        expect(weatherInfoEl.innerHTML).toBe(historyCityListAfterClick);
+
+        expect(weatherInfoWindowRiht.innerHTML).toBe(rightWindowInnerAfterClick);
+        }, 500);
+        
+          
 
     });
 });

@@ -1,4 +1,4 @@
-import { getWeather } from "./getWeather";
+import { getWeather } from "./getWeather.js";
 import { showCityOnMapAfterClickOnButton } from "../drawYmap.js";
 jest.mock("../drawYmap.js", () => {
   return {
@@ -22,8 +22,7 @@ describe("getWeather", () => {
     const curCity = "Saratov";
     const openweathermap = { temp: 12 };
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
-    // const spy = jest.spyOn(ymap, "showCityOnMapAfterClickOnButton");
-    // spy.mockReturnValue("mocked");
+    
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(openweathermap) })
     );

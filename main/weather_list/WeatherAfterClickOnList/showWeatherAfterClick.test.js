@@ -1,6 +1,7 @@
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 
 import { clickOnList } from "../../drawYmap.js";
+
 jest.mock("../../drawYmap.js", () => {
   return {
     clickOnList: jest.fn(() => "mocked")
@@ -38,8 +39,7 @@ describe("cityInList", () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
     const inner = `<div><p id=\"p_img\">Current temperature in Saratov is  2.34°С</p>
 <img id=\"imgW\" src=\"http://openweathermap.org/img/wn/04n.png\" alt=\"weathericon\"></div>`;
-    // const spy = jest.spyOn(ymap, "clickOnList");
-    // spy.mockReturnValue("mocked");
+    
 
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(result) })
@@ -47,8 +47,7 @@ describe("cityInList", () => {
     let weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
-    // clickOnList.mockImplementationOnce(() => 1);
-    // const mockedclickOnList = clickOnList();
+    
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
 
     expect(clickOnList()).toBe("mocked");

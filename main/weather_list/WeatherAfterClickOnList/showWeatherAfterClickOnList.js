@@ -1,4 +1,5 @@
 import { clickOnList } from "../../drawYmap.js";
+
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 
 export async function showWeatherAfterClickOnList(text, weatherInfoWindowRiht) {

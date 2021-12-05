@@ -1,6 +1,7 @@
 import { showCityOnMapAfterClickOnButton } from "../drawYmap.js";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
+// eslint-disable-next-line import/prefer-default-export
 export async function getWeather(cityName) {
   try {
     const respons = await window.fetch(

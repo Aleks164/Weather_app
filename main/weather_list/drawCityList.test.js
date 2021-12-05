@@ -1,4 +1,5 @@
 import { drawCityList } from "./drawCityList";
+
 let el;
 describe("drawCityList", () => {
   beforeEach(() => {

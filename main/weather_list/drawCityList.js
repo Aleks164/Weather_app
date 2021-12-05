@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export async function drawCityList(el, items) {
   if (items.length > 10) {
     items.pop();
