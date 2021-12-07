@@ -1,4 +1,8 @@
 import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow.js";
+import arrow from './images/arrow.png';
+
+const myArrow = new Image();
+myArrow.src = arrow;
 
 var myMap;
 var mapposition = [];
@@ -22,7 +26,7 @@ export function clickOnList(el) {
             },
             {
               iconLayout: "default#image",
-              iconImageHref: "images/arrow.png",
+              iconImageHref: arrow,
               iconImageSize: [45, 45],
               iconImageOffset: [-47, 5]
             }
@@ -46,7 +50,7 @@ export function showCityOnMapAfterClickOnButton(loc) {
     },
     {
       iconLayout: "default#image",
-      iconImageHref: "images/arrow.png",
+      iconImageHref: arrow,
       iconImageSize: [45, 45],
       iconImageOffset: [-47, 5]
     }
@@ -82,7 +86,7 @@ ymaps.ready(async () => {
     },
     {
       iconLayout: "default#image",
-      iconImageHref: "images/arrow.png",
+      iconImageHref: arrow,
       iconImageSize: [45, 45],
       iconImageOffset: [-47, 5]
     }
