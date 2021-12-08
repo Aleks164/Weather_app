@@ -2,9 +2,11 @@
 import * as weather from "./weatherInfoWindow.js";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
-let cityCache = false;
+// eslint-disable-next-line no-unused-vars
+const cityCache = false;
 let weatherCache = false;
 
+// eslint-disable-next-line no-shadow
 export async function getLocaion(cityCache) {
   try {
     if (!cityCache) {

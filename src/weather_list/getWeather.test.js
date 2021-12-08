@@ -1,10 +1,9 @@
 import { getWeather } from "./getWeather.js";
 import { showCityOnMapAfterClickOnButton } from "../drawYmap.js";
-jest.mock("../drawYmap.js", () => {
-  return {
+
+jest.mock("../drawYmap.js", () => ({
     showCityOnMapAfterClickOnButton: jest.fn(() => "mocked")
-  };
-});
+  }));
 describe("getWeather", () => {
   let saveWindowFech;
   const API_KEY = "208564fc52a377799242a74d74f824e0";

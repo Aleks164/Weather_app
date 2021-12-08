@@ -6,7 +6,7 @@ import {
 } from "./localStorage_read_save";
 
 describe("localStorage_read_save", () => {
-  let originalSetItem, originalGetItem, mockStorage;
+  let originalSetItem; let originalGetItem; let mockStorage;
   const cityKey = "inputs";
   const coorKey = "coord";
   beforeEach(() => {

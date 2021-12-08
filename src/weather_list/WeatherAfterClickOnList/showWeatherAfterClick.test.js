@@ -2,14 +2,12 @@ import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 
 import { clickOnList } from "../../drawYmap.js";
 
-jest.mock("../../drawYmap.js", () => {
-  return {
+jest.mock("../../drawYmap.js", () => ({
     clickOnList: jest.fn(() => "mocked")
-  };
-});
+  }));
 
 describe("cityInList", () => {
-  let saveWindowFech, el;
+  let saveWindowFech; let el;
   const API_KEY = "208564fc52a377799242a74d74f824e0";
 
   beforeEach(() => {
@@ -44,7 +42,7 @@ describe("cityInList", () => {
     window.fetch.mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(result) })
     );
-    let weatherInfoWindowRiht = document.querySelector(
+    const weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
     
@@ -67,7 +65,7 @@ describe("cityInList", () => {
     window.fetch.mockImplementationOnce(() =>
       Promise.reject(new Error("Failed to fetch"))
     );
-    let weatherInfoWindowRiht = document.querySelector(
+    const weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
     await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);

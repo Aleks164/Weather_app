@@ -1,7 +1,7 @@
 import * as weather from "./weatherInfoWindow";
 
 describe("weatherInfoWindow", () => {
-  let saveWindowFech, el;
+  let saveWindowFech; let el;
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
