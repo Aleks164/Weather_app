@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Aleks164/Weather_app#readme",
   "dependencies": {
     "core-js": "^2.6.12",
+    "coverage": "^0.4.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
