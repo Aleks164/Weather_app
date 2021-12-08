@@ -2,7 +2,7 @@ name: "coverage"
 on:
   pull_request:
     branches:
-      - work_in_webpack
+      - main
 jobs:
   coverage:
     runs-on: ubuntu-latest
