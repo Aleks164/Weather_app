@@ -51,8 +51,7 @@ export async function crateDomEl(el) {
   const items = await readList();
   const coordItems = await readCoordList();
   drawCityList(weatherInfoEl, items);
-  await showWeatherInWindow(weatherInfoWindow);//  нужен ли await?
-
+  await showWeatherInWindow(weatherInfoWindow);
   formEl.addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const formElement = ev.target;

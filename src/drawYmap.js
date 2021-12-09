@@ -1,12 +1,17 @@
+/* eslint-disable no-undef */
 import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow.js";
+import arrow from './images/arrow.png';
 
-var myMap;
-var mapposition = [];
-var placemark;
+const myArrow = new Image();
+myArrow.src = arrow;
 
-export function clickOnList(el) {
-  const text = el;
-  let item = localStorage.getItem("inputs");
+let myMap;
+let mapposition = [];
+let placemark;
+
+export function clickOnList(elItem) {
+  const text = elItem;
+  const item = localStorage.getItem("inputs");
   for (let i = 0; i < 11; i++) {
     if (JSON.parse(item)[i] === text) {
       const el = localStorage.getItem("coord");
@@ -22,7 +27,7 @@ export function clickOnList(el) {
             },
             {
               iconLayout: "default#image",
-              iconImageHref: "images/arrow.png",
+              iconImageHref: arrow,
               iconImageSize: [45, 45],
               iconImageOffset: [-47, 5]
             }
@@ -46,7 +51,7 @@ export function showCityOnMapAfterClickOnButton(loc) {
     },
     {
       iconLayout: "default#image",
-      iconImageHref: "images/arrow.png",
+      iconImageHref: arrow,
       iconImageSize: [45, 45],
       iconImageOffset: [-47, 5]
     }
@@ -82,10 +87,10 @@ ymaps.ready(async () => {
     },
     {
       iconLayout: "default#image",
-      iconImageHref: "images/arrow.png",
+      iconImageHref: arrow,
       iconImageSize: [45, 45],
       iconImageOffset: [-47, 5]
     }
   );
   myMap.geoObjects.add(placemark);
-})
+});
