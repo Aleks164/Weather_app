@@ -62,7 +62,7 @@ export async function crateDomEl(el) {
 
     const citylist = cityForList(weather);
     const coordList = coordForList(weather);
-    console.log(coordList === [])
+    console.log(coordList === []);
     if (coordList.length !== 0) {
       items.unshift(citylist);
       coordItems.unshift(coordList);
@@ -71,6 +71,5 @@ export async function crateDomEl(el) {
       drawInfoWindowRiht(weather, weatherInfoWindowRiht);
       drawCityList(weatherInfoEl, items);
     }
-
   });
 }

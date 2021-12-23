@@ -35,9 +35,7 @@ describe("getWeather", () => {
     const curCity = "Saratov";
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
 
-    window.fetch.mockImplementationOnce(() =>
-      Promise.resolve({ ok: false })
-    );
+    window.fetch.mockImplementationOnce(() => Promise.resolve({ ok: false }));
     const result = await getWeather(curCity);
     expect(result).toEqual(curCity);
     expect(window.fetch).toHaveBeenCalledWith(url);
