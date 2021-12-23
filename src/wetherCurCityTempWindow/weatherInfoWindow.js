@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-self-import
-import * as weather from "./weatherInfoWindow.js";
+import * as weather from "./weatherInfoWindow";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 // eslint-disable-next-line no-unused-vars

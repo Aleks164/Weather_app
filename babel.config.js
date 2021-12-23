@@ -1,15 +1,15 @@
-module.exports = api => ({
-  "plugins": [
+module.exports = (api) => ({
+  plugins: [
     [
       "@babel/plugin-transform-runtime",
       {
-        "absoluteRuntime": false,
-        "corejs": false,
-        "helpers": true,
-        "regenerator": true,
-        "version": "7.0.0-beta.0"
-      }
-    ]
+        absoluteRuntime: false,
+        corejs: false,
+        helpers: true,
+        regenerator: true,
+        version: "7.0.0-beta.0",
+      },
+    ],
   ],
   presets: [
     [
@@ -17,10 +17,10 @@ module.exports = api => ({
       {
         useBuiltIns: "entry",
         corejs: "3",
-        targets: api.caller(caller => caller && caller.target === "node")
+        targets: api.caller((caller) => caller && caller.target === "node")
           ? { node: "current" }
-          : { chrome: "58", ie: "11" }
-      }
-    ]
-  ]
-})
+          : { chrome: "58", ie: "11" },
+      },
+    ],
+  ],
+});

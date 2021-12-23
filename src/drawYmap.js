@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow.js";
-import arrow from './images/arrow.png';
+import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow";
+import arrow from "./images/arrow.png";
 
 const myArrow = new Image();
 myArrow.src = arrow;
@@ -23,13 +23,13 @@ export function clickOnList(elItem) {
           placemark = new ymaps.Placemark(
             jI,
             {
-              hintContent: `${jI[0]}, ${jI[1]}`
+              hintContent: `${jI[0]}, ${jI[1]}`,
             },
             {
               iconLayout: "default#image",
               iconImageHref: arrow,
               iconImageSize: [45, 45],
-              iconImageOffset: [-47, 5]
+              iconImageOffset: [-47, 5],
             }
           );
           myMap.geoObjects.add(placemark);
@@ -47,13 +47,13 @@ export function showCityOnMapAfterClickOnButton(loc) {
   placemark = new ymaps.Placemark(
     [latitude, longitude],
     {
-      hintContent: [latitude, longitude]
+      hintContent: [latitude, longitude],
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5]
+      iconImageOffset: [-47, 5],
     }
   );
   myMap.geoObjects.add(placemark);
@@ -78,18 +78,18 @@ ymaps.ready(async () => {
     center: [mapposition[0], mapposition[1]],
     zoom: 8,
     controls: ["zoomControl"],
-    behaviors: ["drag"]
+    behaviors: ["drag"],
   });
   placemark = new ymaps.Placemark(
     [mapposition[0], mapposition[1]],
     {
-      hintContent: `${mapposition[0]}, ${mapposition[1]}`
+      hintContent: `${mapposition[0]}, ${mapposition[1]}`,
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5]
+      iconImageOffset: [-47, 5],
     }
   );
   myMap.geoObjects.add(placemark);

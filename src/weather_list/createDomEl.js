@@ -2,14 +2,14 @@ import {
   readList,
   readCoordList,
   saveList,
-  saveCoordList
-} from "./localStorage_read_save.js";
-import { drawCityList } from "./drawCityList.js";
-import { getWeather } from "./getWeather.js";
-import { cityForList } from "./cityForList.js";
-import { coordForList } from "./coordForList.js";
-import { drawInfoWindowRiht } from "./drawInfoWindowRiht.js";
-import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow.js";
+  saveCoordList,
+} from "./localStorage_read_save";
+import { drawCityList } from "./drawCityList";
+import { getWeather } from "./getWeather";
+import { cityForList } from "./cityForList";
+import { coordForList } from "./coordForList";
+import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
+import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow";
 // eslint-disable-next-line import/prefer-default-export
 export async function crateDomEl(el) {
   el.innerHTML = `<h1 class="title">Weather</h1>
