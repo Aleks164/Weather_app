@@ -62,11 +62,15 @@ export async function crateDomEl(el) {
 
     const citylist = cityForList(weather);
     const coordList = coordForList(weather);
-    items.unshift(citylist);
-    coordItems.unshift(coordList);
-    saveList(items);
-    saveCoordList(coordItems);
-    drawInfoWindowRiht(weather, weatherInfoWindowRiht);
-    drawCityList(weatherInfoEl, items);
+    console.log(coordList === [])
+    if (coordList.length !== 0) {
+      items.unshift(citylist);
+      coordItems.unshift(coordList);
+      saveList(items);
+      saveCoordList(coordItems);
+      drawInfoWindowRiht(weather, weatherInfoWindowRiht);
+      drawCityList(weatherInfoEl, items);
+    }
+
   });
 }
