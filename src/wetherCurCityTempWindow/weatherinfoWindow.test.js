@@ -1,7 +1,8 @@
 import * as weather from "./weatherInfoWindow";
 
 describe("weatherInfoWindow", () => {
-  let saveWindowFech; let el;
+  let saveWindowFech;
+  let el;
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -79,9 +80,9 @@ describe("weatherInfoWindow", () => {
       name: "Saratov",
       weather: [
         {
-          icon: "04d"
-        }
-      ]
+          icon: "04d",
+        },
+      ],
     };
     const innerHTMLtext =
       '<p id="curCity">Saratov</p><img id="imgWind" src="http://openweathermap.org/img/wn/04d.png" alt="weathericon" <="" img=""><hr><p id="curTemp">Current temperature in your city is  <b id="tempColor"> 12°С</b></p>';

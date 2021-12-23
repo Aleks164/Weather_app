@@ -2,11 +2,13 @@ import {
   readList,
   readCoordList,
   saveList,
-  saveCoordList
+  saveCoordList,
 } from "./localStorage_read_save";
 
 describe("localStorage_read_save", () => {
-  let originalSetItem; let originalGetItem; let mockStorage;
+  let originalSetItem;
+  let originalGetItem;
+  let mockStorage;
   const cityKey = "inputs";
   const coorKey = "coord";
   beforeEach(() => {

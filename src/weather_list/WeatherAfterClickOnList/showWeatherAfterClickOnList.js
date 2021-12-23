@@ -1,4 +1,4 @@
-import { clickOnList } from "../../drawYmap.js";
+import { clickOnList } from "../../drawYmap";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 
