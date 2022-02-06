@@ -34,7 +34,7 @@ export async function crateDomEl(el) {
   </div>
   <hr id="hr2">
   <div id="weatherInfocont">
-  <div id="weatherInfo"></div>
+  <div id="weatherInfo">{{weatherList}}</div>
   <div id="map"></div>
   </div>
   <div  class="animate__fadeInLeft" id="weatherInfoWindow"></div>
@@ -43,14 +43,14 @@ export async function crateDomEl(el) {
 `;
 
   const formEl = document.querySelector("form");
-  const weatherInfoEl = document.querySelector("#weatherInfo");
+  // const weatherInfoEl = document.querySelector("#weatherInfo");
   const weatherInfoWindowRiht = document.querySelector(
     "#weatherInfoWindowRiht"
   );
   const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
   const items = await readList();
   const coordItems = await readCoordList();
-  drawCityList(weatherInfoEl, items);
+  el.innerHTML = drawCityList(el, items);
   await showWeatherInWindow(weatherInfoWindow);
   formEl.addEventListener("submit", async (ev) => {
     ev.preventDefault();
@@ -62,14 +62,13 @@ export async function crateDomEl(el) {
 
     const citylist = cityForList(weather);
     const coordList = coordForList(weather);
-    console.log(coordList === []);
     if (coordList.length !== 0) {
       items.unshift(citylist);
       coordItems.unshift(coordList);
       saveList(items);
       saveCoordList(coordItems);
       drawInfoWindowRiht(weather, weatherInfoWindowRiht);
-      drawCityList(weatherInfoEl, items);
+      el.innerHTML = drawCityList(el, items);
     }
   });
 }

@@ -6,9 +6,9 @@ import {
 } from "./localStorage_read_save";
 
 describe("localStorage_read_save", () => {
-  let originalSetItem;
-  let originalGetItem;
-  let mockStorage;
+  let originalSetItem: any;
+  let originalGetItem: any;
+  let mockStorage: any;
   const cityKey = "inputs";
   const coorKey = "coord";
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe("localStorage_read_save", () => {
   afterEach(() => {
     mockStorage = {};
   });
-  it("should returne [] for empty local storage", async () => {
+  it("cityList storage should returne [] for empty local storage", async () => {
     const result = await readList();
 
     expect(result).toStrictEqual([]);
@@ -46,7 +46,7 @@ describe("localStorage_read_save", () => {
     saveList(inputsHistory);
     const expectLocalStorage = '["Saratov","NeSaratov"]';
 
-    const expectedmockStorage = {};
+    const expectedmockStorage: any = {};
     expectedmockStorage[cityKey] = expectLocalStorage;
     expect(mockStorage).toStrictEqual(expectedmockStorage);
 
@@ -55,7 +55,7 @@ describe("localStorage_read_save", () => {
       expectLocalStorage
     );
   });
-  it("should returne [] for empty local storage", async () => {
+  it("CoordList storage should returne [] for empty local storage", async () => {
     const result = await readCoordList();
 
     expect(result).toStrictEqual([]);
@@ -66,7 +66,7 @@ describe("localStorage_read_save", () => {
     saveCoordList(inputsHistory);
     const expectLocalStorage = '["[51.566, 46.0333]","[66.566, 44.344]"]';
 
-    const expectedmockStorage = {};
+    const expectedmockStorage: any = {};
     expectedmockStorage[coorKey] = expectLocalStorage;
     expect(mockStorage).toStrictEqual(expectedmockStorage);
 

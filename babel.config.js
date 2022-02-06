@@ -1,16 +1,5 @@
 module.exports = (api) => ({
-  plugins: [
-    [
-      "@babel/plugin-transform-runtime",
-      {
-        absoluteRuntime: false,
-        corejs: false,
-        helpers: true,
-        regenerator: true,
-        version: "7.0.0-beta.0",
-      },
-    ],
-  ],
+  plugins: ["@babel/plugin-transform-runtime"],
   presets: [
     [
       "@babel/preset-env",
@@ -22,5 +11,6 @@ module.exports = (api) => ({
           : { chrome: "58", ie: "11" },
       },
     ],
+    "@babel/preset-typescript",
   ],
 });

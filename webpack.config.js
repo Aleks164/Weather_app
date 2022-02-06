@@ -1,31 +1,29 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// eslint-disable-next-line no-unused-vars
-const { template } = require("lodash");
-const { resolve } = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const path = require("path");
 
-// eslint-disable-next-line prefer-destructuring
-const NODE_ENV = process.env.NODE_ENV;
+const { NODE_ENV } = process.env;
 
 module.exports = {
-  entry: {
-    main: resolve(__dirname, "src/main.js"),
-    // drawYmap: resolve(__dirname, 'src/drawYmap.js'),
-  },
+  entry: path.resolve(__dirname, "src/main.ts"),
   output: {
-    filename: "[name].js",
-    path: resolve(`${__dirname}/dist`),
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
     clean: true,
     environment: {
       arrowFunction: false,
     },
   },
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
   devtool: NODE_ENV === "production" ? "hidden-source-map" : "eval-source-map",
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.([jt])s$/,
         exclude: /(node_modules)/,
         use: {
           loader: "babel-loader",
@@ -39,10 +37,10 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(png)$/i,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
         generator: {
-          filename: `./images/[contenthash][ext]`,
+          filename: "./image/[contenthash][ext]",
         },
       },
       {
@@ -51,11 +49,10 @@ module.exports = {
       },
     ],
   },
-
   mode: NODE_ENV === "production" ? "production" : "development",
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, "src/index.html"),
+      template: path.resolve(__dirname, "src/index.html"),
     }),
     new MiniCssExtractPlugin(),
   ],

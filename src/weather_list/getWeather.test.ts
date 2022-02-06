@@ -5,7 +5,8 @@ jest.mock("../drawYmap", () => ({
   showCityOnMapAfterClickOnButton: jest.fn(() => "mocked"),
 }));
 describe("getWeather", () => {
-  let saveWindowFech;
+
+  let saveWindowFech: any;
   const API_KEY = "208564fc52a377799242a74d74f824e0";
 
   beforeEach(() => {
@@ -26,7 +27,7 @@ describe("getWeather", () => {
       Promise.resolve({ json: () => Promise.resolve(openweathermap), ok: true })
     );
     const result = await getWeather(curCity);
-    expect(showCityOnMapAfterClickOnButton()).toBe("mocked");
+    expect(showCityOnMapAfterClickOnButton("123")).toBe("mocked");
     expect(result).toEqual(openweathermap);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);

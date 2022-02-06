@@ -1,32 +1,31 @@
 module.exports = {
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
   env: {
     browser: true,
     es2021: true,
     "jest/globals": true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: [
+    "airbnb-base",
+    "plugin:jest/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+  ],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: "module",
   },
   rules: {
+    "import/prefer-default-export": "off",
+    "jest/valid-title": "off",
     "no-console": "off",
-    "no-restricted-syntax": [
-      "error",
-      {
-        selector:
-          "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
-        message: "Unexpected property on console object was called",
-      },
-    ],
-    "no-plusplus": [2, { allowForLoopAfterthoughts: true }],
     "no-alert": "off",
-    eqeqeq: 1,
-    "consistent-return": "warn",
-    "no-useless-escape": "warn",
-    "no-param-reassign": "warn",
-    "import/extensions": "warn",
-    // "import/prefer-default-export": "off",
+    "no-restricted-globals": "off",
+    "no-plusplus": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "no-useless-escape": "off",
+    "no-param-reassign": "warn"
   },
-  plugins: ["jest"],
 };

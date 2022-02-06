@@ -1,6 +1,7 @@
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
 
-let el;
+
+let el: HTMLDivElement;
 describe("drawInfoWindowRiht", () => {
   beforeEach(() => {
     el = document.createElement("div");
@@ -20,13 +21,13 @@ describe("drawInfoWindowRiht", () => {
       ],
     };
     const inner = '<p id="p_img">Current temperature in Saratov is  2.34°С</p>';
-    drawInfoWindowRiht(weather, el);
-    expect(el.innerHTML).toContain(inner);
+
+    expect(drawInfoWindowRiht(weather)).toContain(inner);
   });
-  it("it should draw the right window with the text that the entered city was not found", async () => {
+  it("should draw the right window with the text that the entered city was not found", async () => {
     const weather = "Zaratov";
     const inner = `"${weather}" was not found`;
-    drawInfoWindowRiht(weather, el);
-    expect(el.innerHTML).toContain(inner);
+
+    expect(drawInfoWindowRiht(weather)).toBe(inner);
   });
 });
