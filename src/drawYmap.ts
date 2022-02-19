@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-undef */
 import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow";
 import arrow from "./images/arrow.png";
@@ -5,37 +6,46 @@ import arrow from "./images/arrow.png";
 const myArrow = new Image();
 myArrow.src = arrow;
 
-let myMap: {};
+let myMap: {
+  setCenter: (jI: [number, number]) => void;
+  geoObjects: {
+    remove: (placemark: unknown) => void;
+    add: (placemark: unknown) => void;
+  };
+};
 let mapposition: number[] = [];
-let placemark: any;
+let placemark: unknown;
 
 export function clickOnList(elItem: string) {
   const text = elItem;
   const item: string | null = localStorage.getItem("inputs");
   for (let i = 0; i < 11; i++) {
-    if (JSON.parse(item)[i] === text) {
-      const el = localStorage.getItem("coord");
-      // eslint-disable-next-line no-loop-func
-      setTimeout(() => {
-        const jI = JSON.parse(el)[i];
-        if (typeof el[0] !== "undefined") {
-          myMap.geoObjects.remove(placemark);
-          placemark = new ymaps.Placemark(
-            jI,
-            {
-              hintContent: `${jI[0]}, ${jI[1]}`
-            },
-            {
-              iconLayout: "default#image",
-              iconImageHref: arrow,
-              iconImageSize: [45, 45],
-              iconImageOffset: [-47, 5]
+    if (item) {
+      if (JSON.parse(item)[i] === text) {
+        const el = localStorage.getItem("coord");
+        if (el) {
+          setTimeout(() => {
+            const jI = JSON.parse(el)[i];
+            if (typeof el[0] !== "undefined") {
+              myMap.geoObjects.remove(placemark);
+              placemark = new ymaps.Placemark(
+                jI,
+                {
+                  hintContent: `${jI[0]}, ${jI[1]}`,
+                },
+                {
+                  iconLayout: "default#image",
+                  iconImageHref: arrow,
+                  iconImageSize: [45, 45],
+                  iconImageOffset: [-47, 5],
+                }
+              );
+              myMap.geoObjects.add(placemark);
+              myMap.setCenter(jI);
             }
-          );
-          myMap.geoObjects.add(placemark);
-          myMap.setCenter(jI);
+          }, 200);
         }
-      }, 200);
+      }
     }
   }
 }
@@ -47,13 +57,13 @@ export function showCityOnMapAfterClickOnButton(loc) {
   placemark = new ymaps.Placemark(
     [latitude, longitude],
     {
-      hintContent: [latitude, longitude]
+      hintContent: [latitude, longitude],
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5]
+      iconImageOffset: [-47, 5],
     }
   );
   myMap.geoObjects.add(placemark);
@@ -78,18 +88,18 @@ ymaps.ready(async () => {
     center: [mapposition[0], mapposition[1]],
     zoom: 8,
     controls: ["zoomControl"],
-    behaviors: ["drag"]
+    behaviors: ["drag"],
   });
   placemark = new ymaps.Placemark(
     [mapposition[0], mapposition[1]],
     {
-      hintContent: `${mapposition[0]}, ${mapposition[1]}`
+      hintContent: `${mapposition[0]}, ${mapposition[1]}`,
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5]
+      iconImageOffset: [-47, 5],
     }
   );
   myMap.geoObjects.add(placemark);

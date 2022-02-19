@@ -28,6 +28,7 @@ module.exports = {
     "no-useless-escape": "off",
     "no-param-reassign": "warn",
     "class-methods-use-this": "warn",
-    "no-new": "warn"
+    "no-new": "warn",
+    "jest/no-conditional-expect": "off",
   },
 };

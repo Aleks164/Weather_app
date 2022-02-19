@@ -12,7 +12,6 @@ export default interface WeatherType {
 export type State = string[];
 
 export interface TemplateType {
-
   state: State;
 
   events: {

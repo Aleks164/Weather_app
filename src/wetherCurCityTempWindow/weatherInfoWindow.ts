@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-shadow */
 // eslint-disable-next-line import/no-self-import
 import * as weather from "./weatherInfoWindow";
+import WeatherType from "../weather_list/types";
 
 const API_KEY = "208564fc52a377799242a74d74f824e0";
-// eslint-disable-next-line no-unused-vars
 const cityCache = false;
-let weatherCache = false;
+let weatherCache: WeatherType;
 
-// eslint-disable-next-line no-shadow
 export function getLocaion<
   ParamType,
   ResultType = ParamType extends JSON ? JSON : string
@@ -25,7 +26,7 @@ export async function getLocaion(cityCache?: JSON) {
   }
 }
 
-export async function getCurrenCityTemp() {
+export async function getCurrenCityTemp(): Promise<string | WeatherType> {
   const curCity = await weather.getLocaion();
   try {
     if (curCity === "Failed to fetch of geo") {
@@ -36,12 +37,12 @@ export async function getCurrenCityTemp() {
     );
     weatherCache = await response.json();
     return weatherCache;
-  } catch (e) {
-    return `${e.message}`;
+  } catch (e: unknown) {
+    return `${(e as Error).message}`;
   }
 }
 
-export async function showWeatherInWindow(weatherInfoWindow) {
+export async function showWeatherInWindow(weatherInfoWindow: HTMLElement) {
   const cityTemp = await weather.getCurrenCityTemp();
   if (typeof cityTemp === "string") {
     weatherInfoWindow.innerHTML = `<p id = "curCity">${cityTemp}</p><p id = "curTemp">Viewing the weather in your city is currently unavailable</p>`;

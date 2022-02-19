@@ -3,7 +3,10 @@ import { clickOnList } from "../../drawYmap";
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 
 // eslint-disable-next-line import/prefer-default-export
-export async function showWeatherAfterClickOnList(text: string, weatherInfoWindowRiht: HTMLElement) {
+export async function showWeatherAfterClickOnList(
+  text: string,
+  weatherInfoWindowRiht: HTMLElement
+) {
   try {
     clickOnList(text);
     const respons = await window.fetch(

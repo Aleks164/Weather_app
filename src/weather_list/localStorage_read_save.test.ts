@@ -6,9 +6,9 @@ import {
 } from "./localStorage_read_save";
 
 describe("localStorage_read_save", () => {
-  let originalSetItem: any;
-  let originalGetItem: any;
-  let mockStorage: any;
+  let originalSetItem: typeof window.Storage.prototype.setItem;
+  let originalGetItem: typeof window.Storage.prototype.getItem;
+  let mockStorage: Record<string, string>;
   const cityKey = "inputs";
   const coorKey = "coord";
   beforeEach(() => {
@@ -46,7 +46,7 @@ describe("localStorage_read_save", () => {
     saveList(inputsHistory);
     const expectLocalStorage = '["Saratov","NeSaratov"]';
 
-    const expectedmockStorage: any = {};
+    const expectedmockStorage: Record<string, string> = {};
     expectedmockStorage[cityKey] = expectLocalStorage;
     expect(mockStorage).toStrictEqual(expectedmockStorage);
 
@@ -66,7 +66,7 @@ describe("localStorage_read_save", () => {
     saveCoordList(inputsHistory);
     const expectLocalStorage = '["[51.566, 46.0333]","[66.566, 44.344]"]';
 
-    const expectedmockStorage: any = {};
+    const expectedmockStorage: Record<string, string> = {};
     expectedmockStorage[coorKey] = expectLocalStorage;
     expect(mockStorage).toStrictEqual(expectedmockStorage);
 

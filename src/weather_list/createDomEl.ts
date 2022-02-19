@@ -4,16 +4,15 @@ import {
   saveList,
   saveCoordList,
 } from "./localStorage_read_save";
-import { drawCityList } from "./drawCityList";
 import { getWeather } from "./getWeather";
 import { cityForList } from "./cityForList";
 import { coordForList } from "./coordForList";
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
 import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow";
-import { Template } from "./template"
+import { Template } from "./template";
 // eslint-disable-next-line import/prefer-default-export
 
-export async function crateDomEl(el) {
+export async function crateDomEl(el: HTMLElement) {
   el.innerHTML = `<h1 class="title">Weather</h1>
   <hr id="hr1">
 <div id="maindiv">
@@ -52,29 +51,30 @@ export async function crateDomEl(el) {
   const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
   const items = await readList();
   const coordItems = await readCoordList();
-  // weatherInfoEl.innerHTML = drawCityList(weatherInfoEl, items);
-  // eslint-disable-next-line no-new
-  new Template(weatherInfoEl, items);
-  await showWeatherInWindow(weatherInfoWindow);
-  formEl.addEventListener("submit", async (ev) => {
-    ev.preventDefault();
-    const formElement = ev.target as HTMLElement;
-    const inputEl = formElement.querySelector("input");
-    const cityName = inputEl.value;
-    inputEl.value = "";
-    const weather = await getWeather(cityName);
+  if (weatherInfoEl) {
+    new Template(weatherInfoEl as HTMLAnchorElement, items);
+  }
+  await showWeatherInWindow(weatherInfoWindow as HTMLElement);
+  if (formEl && weatherInfoWindowRiht) {
+    formEl.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const formElement = ev.target as HTMLElement;
+      const inputEl = formElement.querySelector("input");
+      if (inputEl) {
+        const cityName = inputEl.value;
+        inputEl.value = "";
+        const weather = await getWeather(cityName);
 
-    const citylist = cityForList(weather);
-    const coordList = coordForList(weather);
-    if (coordList.length !== 0) {
-      console.log(items)
-      items.unshift(citylist);
-      coordItems.unshift(coordList);
-      saveList(items);
-      saveCoordList(coordItems);
-      weatherInfoWindowRiht.innerHTML = drawInfoWindowRiht(weather);
-      // weatherInfoEl.innerHTML = drawCityList(weatherInfoEl, items);
-      // new Template(weatherInfoEl, items);
-    }
-  });
+        const citylist = cityForList(weather);
+        const coordList = coordForList(weather);
+        if (coordList.length !== 0) {
+          items.unshift(citylist);
+          coordItems.unshift(coordList);
+          saveList(items);
+          saveCoordList(coordItems);
+          weatherInfoWindowRiht.innerHTML = drawInfoWindowRiht(weather);
+        }
+      }
+    });
+  }
 }

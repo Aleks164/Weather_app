@@ -1,7 +1,8 @@
+/* eslint-disable no-promise-executor-return */
 import * as weather from "./weatherInfoWindow";
 
 describe("weatherInfoWindow", () => {
-  let saveWindowFech: any;
+  let saveWindowFech: typeof window.fetch;
   let el: HTMLElement;
   function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,7 +24,6 @@ describe("weatherInfoWindow", () => {
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = "";
   });
-  JSON;
   it("geo fetch should return expected data if promis resolve", async () => {
     const city = { city: "Saratov" };
     const url = `https://get.geojs.io/v1/ip/geo.json`;
@@ -80,9 +80,9 @@ describe("weatherInfoWindow", () => {
       name: "Saratov",
       weather: [
         {
-          icon: "04d"
-        }
-      ]
+          icon: "04d",
+        },
+      ],
     };
     const innerHTMLtext =
       '<p id="curCity">Saratov</p><img id="imgWind" src="http://openweathermap.org/img/wn/04d.png" alt="weathericon" <="" img=""><hr><p id="curTemp">Current temperature in your city is  <b id="tempColor"> 12°С</b></p>';

@@ -16,11 +16,11 @@ describe("drawInfoWindowRiht", () => {
       name: "Saratov",
       weather: [
         {
-          icon: "04n"
-        }
-      ]
+          icon: "04n",
+        },
+      ],
     };
-    const inner = /Current temperature in Saratov is  2.34/;
+    const inner = /Current temperature in Saratov is {2}2.34/;
 
     expect(drawInfoWindowRiht(weather)).toMatch(inner);
   });

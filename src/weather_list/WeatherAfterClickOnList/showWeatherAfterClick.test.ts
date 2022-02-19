@@ -1,13 +1,14 @@
+/* eslint-disable jest/no-conditional-expect */
 import { showWeatherAfterClickOnList } from "./showWeatherAfterClickOnList";
 
 import { clickOnList } from "../../drawYmap";
 
 jest.mock("../../drawYmap", () => ({
-  clickOnList: jest.fn(() => "mocked")
+  clickOnList: jest.fn(() => "mocked"),
 }));
 
 describe("cityInList", () => {
-  let saveWindowFech: any;
+  let saveWindowFech: typeof window.fetch;
   let el;
   const API_KEY = "208564fc52a377799242a74d74f824e0";
 
@@ -33,7 +34,7 @@ describe("cityInList", () => {
     const result = {
       main: { temp: 2.34 },
       name: "Saratov",
-      weather: [{ icon: "04n" }]
+      weather: [{ icon: "04n" }],
     };
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity}&appid=${API_KEY}`;
     const inner = `<div><p id=\"p_img\">Current temperature in Saratov is  2.34°С</p>
@@ -45,9 +46,12 @@ describe("cityInList", () => {
     const weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
-
-    await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
-
+    if (weatherInfoWindowRiht) {
+      await showWeatherAfterClickOnList(
+        curCity,
+        weatherInfoWindowRiht as HTMLElement
+      );
+    }
     expect(clickOnList("123")).toBe("mocked");
     expect(window.fetch).toHaveBeenCalledTimes(1);
     if (weatherInfoWindowRiht) {
@@ -69,8 +73,12 @@ describe("cityInList", () => {
     const weatherInfoWindowRiht = document.querySelector(
       "#weatherInfoWindowRiht"
     );
-    await showWeatherAfterClickOnList(curCity, weatherInfoWindowRiht);
     if (weatherInfoWindowRiht) {
+      await showWeatherAfterClickOnList(
+        curCity,
+        weatherInfoWindowRiht as HTMLElement
+      );
+
       expect(weatherInfoWindowRiht.innerHTML).toContain(errorMessage);
     }
     expect(window.fetch).toHaveBeenCalledWith(url);
