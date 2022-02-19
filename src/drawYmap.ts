@@ -5,13 +5,13 @@ import arrow from "./images/arrow.png";
 const myArrow = new Image();
 myArrow.src = arrow;
 
-let myMap;
-let mapposition = [];
-let placemark;
+let myMap: {};
+let mapposition: number[] = [];
+let placemark: any;
 
-export function clickOnList(elItem) {
+export function clickOnList(elItem: string) {
   const text = elItem;
-  const item = localStorage.getItem("inputs");
+  const item: string | null = localStorage.getItem("inputs");
   for (let i = 0; i < 11; i++) {
     if (JSON.parse(item)[i] === text) {
       const el = localStorage.getItem("coord");
@@ -23,13 +23,13 @@ export function clickOnList(elItem) {
           placemark = new ymaps.Placemark(
             jI,
             {
-              hintContent: `${jI[0]}, ${jI[1]}`,
+              hintContent: `${jI[0]}, ${jI[1]}`
             },
             {
               iconLayout: "default#image",
               iconImageHref: arrow,
               iconImageSize: [45, 45],
-              iconImageOffset: [-47, 5],
+              iconImageOffset: [-47, 5]
             }
           );
           myMap.geoObjects.add(placemark);
@@ -47,13 +47,13 @@ export function showCityOnMapAfterClickOnButton(loc) {
   placemark = new ymaps.Placemark(
     [latitude, longitude],
     {
-      hintContent: [latitude, longitude],
+      hintContent: [latitude, longitude]
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5],
+      iconImageOffset: [-47, 5]
     }
   );
   myMap.geoObjects.add(placemark);
@@ -78,18 +78,18 @@ ymaps.ready(async () => {
     center: [mapposition[0], mapposition[1]],
     zoom: 8,
     controls: ["zoomControl"],
-    behaviors: ["drag"],
+    behaviors: ["drag"]
   });
   placemark = new ymaps.Placemark(
     [mapposition[0], mapposition[1]],
     {
-      hintContent: `${mapposition[0]}, ${mapposition[1]}`,
+      hintContent: `${mapposition[0]}, ${mapposition[1]}`
     },
     {
       iconLayout: "default#image",
       iconImageHref: arrow,
       iconImageSize: [45, 45],
-      iconImageOffset: [-47, 5],
+      iconImageOffset: [-47, 5]
     }
   );
   myMap.geoObjects.add(placemark);

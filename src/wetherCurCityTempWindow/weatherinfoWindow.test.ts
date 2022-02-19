@@ -1,9 +1,9 @@
 import * as weather from "./weatherInfoWindow";
 
 describe("weatherInfoWindow", () => {
-  let saveWindowFech;
-  let el;
-  function sleep(ms) {
+  let saveWindowFech: any;
+  let el: HTMLElement;
+  function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
@@ -23,11 +23,11 @@ describe("weatherInfoWindow", () => {
   afterEach(() => {
     document.getElementsByTagName("html")[0].innerHTML = "";
   });
-
+  JSON;
   it("geo fetch should return expected data if promis resolve", async () => {
     const city = { city: "Saratov" };
     const url = `https://get.geojs.io/v1/ip/geo.json`;
-    window.fetch.mockImplementationOnce(() =>
+    (window.fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(city) })
     );
     const result = await weather.getLocaion();
@@ -38,7 +38,7 @@ describe("weatherInfoWindow", () => {
   it("geo fetch should return expected data if promis reject", async () => {
     const url = `https://get.geojs.io/v1/ip/geo.json`;
     const errorMessage = "Failed to fetch of geo";
-    window.fetch.mockImplementationOnce(() =>
+    (window.fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.reject(new Error(errorMessage))
     );
     const crutch = false;
@@ -54,20 +54,20 @@ describe("weatherInfoWindow", () => {
     const url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity.city}&appid=${API_KEY}`;
     const spy = jest.spyOn(weather, "getLocaion");
     spy.mockReturnValue(curCity);
-    window.fetch.mockImplementationOnce(() =>
+    (window.fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.resolve({ json: () => Promise.resolve(openweathermap) })
     );
     const result = await weather.getCurrenCityTemp();
     expect(result).toEqual(openweathermap);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);
-    weather.getLocaion.mockRestore();
+    (weather.getLocaion as jest.Mock).mockRestore();
   });
   it("api.openweathermap fetch should return expected data if promis reject", async () => {
     const errorMessage = "Failed to fetch of geo";
     const spy = jest.spyOn(weather, "getLocaion");
     spy.mockReturnValue(errorMessage);
-    window.fetch.mockImplementationOnce(() =>
+    (window.fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.reject(new Error(errorMessage))
     );
     const result = await weather.getCurrenCityTemp();
@@ -80,9 +80,9 @@ describe("weatherInfoWindow", () => {
       name: "Saratov",
       weather: [
         {
-          icon: "04d",
-        },
-      ],
+          icon: "04d"
+        }
+      ]
     };
     const innerHTMLtext =
       '<p id="curCity">Saratov</p><img id="imgWind" src="http://openweathermap.org/img/wn/04d.png" alt="weathericon" <="" img=""><hr><p id="curTemp">Current temperature in your city is  <b id="tempColor"> 12°С</b></p>';
@@ -93,7 +93,7 @@ describe("weatherInfoWindow", () => {
     expect(el.style.display).toEqual("none");
     await sleep(1001);
     expect(el.style.display).toEqual("unset");
-    weather.getCurrenCityTemp.mockRestore();
+    (weather.getCurrenCityTemp as jest.Mock).mockRestore();
   });
   it("will draw a weather window with error text", async () => {
     const errorMessage = "Failed to fetch of geo";
@@ -106,6 +106,6 @@ describe("weatherInfoWindow", () => {
     expect(el.style.display).toEqual("none");
     await sleep(1001);
     expect(el.style.display).toEqual("unset");
-    weather.getCurrenCityTemp.mockRestore();
+    (weather.getCurrenCityTemp as jest.Mock).mockRestore();
   });
 });

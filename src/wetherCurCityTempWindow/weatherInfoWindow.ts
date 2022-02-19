@@ -7,7 +7,11 @@ const cityCache = false;
 let weatherCache = false;
 
 // eslint-disable-next-line no-shadow
-export async function getLocaion(cityCache) {
+export function getLocaion<
+  ParamType,
+  ResultType = ParamType extends JSON ? JSON : string
+>(x?: ParamType): ResultType;
+export async function getLocaion(cityCache?: JSON) {
   try {
     if (!cityCache) {
       const response = await window.fetch(

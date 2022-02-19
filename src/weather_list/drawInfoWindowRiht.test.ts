@@ -1,6 +1,5 @@
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
 
-
 let el: HTMLDivElement;
 describe("drawInfoWindowRiht", () => {
   beforeEach(() => {
@@ -13,16 +12,17 @@ describe("drawInfoWindowRiht", () => {
   it("should draw the right window with text and a picture of the weather", async () => {
     const weather = {
       main: { temp: 2.34 },
+      coord: { lat: 123, lon: 321 },
       name: "Saratov",
       weather: [
         {
-          icon: "04n",
-        },
-      ],
+          icon: "04n"
+        }
+      ]
     };
-    const inner = '<p id="p_img">Current temperature in Saratov is  2.34°С</p>';
+    const inner = /Current temperature in Saratov is  2.34/;
 
-    expect(drawInfoWindowRiht(weather)).toContain(inner);
+    expect(drawInfoWindowRiht(weather)).toMatch(inner);
   });
   it("should draw the right window with the text that the entered city was not found", async () => {
     const weather = "Zaratov";

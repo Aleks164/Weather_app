@@ -26,6 +26,8 @@ module.exports = {
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "no-useless-escape": "off",
-    "no-param-reassign": "warn"
+    "no-param-reassign": "warn",
+    "class-methods-use-this": "warn",
+    "no-new": "warn"
   },
 };

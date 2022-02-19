@@ -10,7 +10,9 @@ import { cityForList } from "./cityForList";
 import { coordForList } from "./coordForList";
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
 import { showWeatherInWindow } from "../wetherCurCityTempWindow/weatherInfoWindow";
+import { Template } from "./template"
 // eslint-disable-next-line import/prefer-default-export
+
 export async function crateDomEl(el) {
   el.innerHTML = `<h1 class="title">Weather</h1>
   <hr id="hr1">
@@ -43,18 +45,20 @@ export async function crateDomEl(el) {
 `;
 
   const formEl = document.querySelector("form");
-  // const weatherInfoEl = document.querySelector("#weatherInfo");
+  const weatherInfoEl = document.querySelector("#weatherInfo");
   const weatherInfoWindowRiht = document.querySelector(
     "#weatherInfoWindowRiht"
   );
   const weatherInfoWindow = document.querySelector("#weatherInfoWindow");
   const items = await readList();
   const coordItems = await readCoordList();
-  el.innerHTML = drawCityList(el, items);
+  // weatherInfoEl.innerHTML = drawCityList(weatherInfoEl, items);
+  // eslint-disable-next-line no-new
+  new Template(weatherInfoEl, items);
   await showWeatherInWindow(weatherInfoWindow);
   formEl.addEventListener("submit", async (ev) => {
     ev.preventDefault();
-    const formElement = ev.target;
+    const formElement = ev.target as HTMLElement;
     const inputEl = formElement.querySelector("input");
     const cityName = inputEl.value;
     inputEl.value = "";
@@ -63,12 +67,14 @@ export async function crateDomEl(el) {
     const citylist = cityForList(weather);
     const coordList = coordForList(weather);
     if (coordList.length !== 0) {
+      console.log(items)
       items.unshift(citylist);
       coordItems.unshift(coordList);
       saveList(items);
       saveCoordList(coordItems);
-      drawInfoWindowRiht(weather, weatherInfoWindowRiht);
-      el.innerHTML = drawCityList(el, items);
+      weatherInfoWindowRiht.innerHTML = drawInfoWindowRiht(weather);
+      // weatherInfoEl.innerHTML = drawCityList(weatherInfoEl, items);
+      // new Template(weatherInfoEl, items);
     }
   });
 }
