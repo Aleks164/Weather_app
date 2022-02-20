@@ -1,12 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 import WeatherType from "./types";
 
-export function cityForList<
-  T,
-  CalcType = T extends string ? string : WeatherType
->(weather: T): CalcType;
-
-export function cityForList(weather: string | WeatherType) {
+export function cityForList(weather: string | WeatherType): string {
   const check = typeof weather === "object";
   if (check) {
     return weather.name;

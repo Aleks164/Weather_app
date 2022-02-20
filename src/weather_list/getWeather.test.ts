@@ -1,5 +1,6 @@
 import { getWeather } from "./getWeather";
 import { showCityOnMapAfterClickOnButton } from "../drawYmap";
+import WeatherType from "./types";
 
 jest.mock("../drawYmap", () => ({
   showCityOnMapAfterClickOnButton: jest.fn(() => "mocked"),
@@ -26,7 +27,9 @@ describe("getWeather", () => {
       Promise.resolve({ json: () => Promise.resolve(openweathermap), ok: true })
     );
     const result = await getWeather(curCity);
-    expect(showCityOnMapAfterClickOnButton("123")).toBe("mocked");
+    expect(
+      showCityOnMapAfterClickOnButton("123" as unknown as WeatherType)
+    ).toBe("mocked");
     expect(result).toEqual(openweathermap);
     expect(window.fetch).toHaveBeenCalledWith(url);
     expect(window.fetch).toHaveBeenCalledTimes(1);

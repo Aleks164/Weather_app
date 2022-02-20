@@ -1,8 +1,10 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-undef */
 import { getLocaion } from "./wetherCurCityTempWindow/weatherInfoWindow";
+import WeatherType from "./weather_list/types";
 import arrow from "./images/arrow.png";
 
+declare const ymaps: any;
 const myArrow = new Image();
 myArrow.src = arrow;
 
@@ -13,7 +15,7 @@ let myMap: {
     add: (placemark: unknown) => void;
   };
 };
-let mapposition: number[] = [];
+let mapposition: number[] | [] = [];
 let placemark: unknown;
 
 export function clickOnList(elItem: string) {
@@ -50,7 +52,7 @@ export function clickOnList(elItem: string) {
   }
 }
 
-export function showCityOnMapAfterClickOnButton(loc) {
+export function showCityOnMapAfterClickOnButton(loc: WeatherType) {
   const latitude = loc.coord.lat;
   const longitude = loc.coord.lon;
   myMap.geoObjects.remove(placemark);
@@ -70,18 +72,22 @@ export function showCityOnMapAfterClickOnButton(loc) {
   myMap.setCenter([latitude, longitude]);
 }
 
-function readCoordList() {
+function readCoordList(): Array<number[]> | [] {
   const item = localStorage.getItem("coord");
   return item === null ? [] : JSON.parse(item);
 }
 
-async function checkStoreCoor(coord) {
-  mapposition = (await readCoordList()[0]) || coord;
+async function checkStoreCoor(coord: [number, number] | []) {
+  if (readCoordList().length === 0) {
+    mapposition = coord;
+  } else {
+    mapposition = await readCoordList()[0];
+  }
 }
 
 ymaps.ready(async () => {
-  const loc = await getLocaion();
-  const coord = [loc.latitude, loc.longitude];
+  const loc: { latitude: number; longitude: number } = await getLocaion();
+  const coord: [number, number] = [loc.latitude, loc.longitude];
   await checkStoreCoor(coord);
 
   myMap = new ymaps.Map("map", {

@@ -1,4 +1,5 @@
 /* eslint-disable no-promise-executor-return */
+import WeatherType from "../weather_list/types";
 import * as weather from "./weatherInfoWindow";
 
 describe("weatherInfoWindow", () => {
@@ -72,7 +73,7 @@ describe("weatherInfoWindow", () => {
     );
     const result = await weather.getCurrenCityTemp();
     expect(result).toEqual(errorMessage);
-    weather.getLocaion.mockRestore();
+    (weather.getLocaion as jest.Mock).mockRestore();
   });
   it("will draw a weather window by adding a weather image and temperature in the text field", async () => {
     const cityTemp = {
@@ -87,7 +88,7 @@ describe("weatherInfoWindow", () => {
     const innerHTMLtext =
       '<p id="curCity">Saratov</p><img id="imgWind" src="http://openweathermap.org/img/wn/04d.png" alt="weathericon" <="" img=""><hr><p id="curTemp">Current temperature in your city is  <b id="tempColor"> 12°С</b></p>';
     const spy = jest.spyOn(weather, "getCurrenCityTemp");
-    spy.mockReturnValue(cityTemp);
+    spy.mockReturnValue(cityTemp as unknown as Promise<string | WeatherType>);
     await weather.showWeatherInWindow(el);
     expect(el.innerHTML).toEqual(innerHTMLtext);
     expect(el.style.display).toEqual("none");
@@ -100,7 +101,9 @@ describe("weatherInfoWindow", () => {
     const innerHTMLtext =
       '<p id="curCity">Failed to fetch of geo</p><p id="curTemp">Viewing the weather in your city is currently unavailable</p>';
     const spy = jest.spyOn(weather, "getCurrenCityTemp");
-    spy.mockReturnValue(errorMessage);
+    spy.mockReturnValue(
+      errorMessage as unknown as Promise<string | WeatherType>
+    );
     await weather.showWeatherInWindow(el);
     expect(el.innerHTML).toEqual(innerHTMLtext);
     expect(el.style.display).toEqual("none");

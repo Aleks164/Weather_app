@@ -7,7 +7,8 @@ export async function getWeather(cityName: string): Promise<string> {
   const respons = await window.fetch(
     `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityName}&appid=${API_KEY}`
   );
-  if (respons.ok) {
+  const cityCheck = /\d+/.test(cityName);
+  if (respons.ok && !cityCheck) {
     const resp = await respons.json();
     showCityOnMapAfterClickOnButton(resp);
     return resp;

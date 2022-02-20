@@ -7,10 +7,13 @@ import WeatherType from "../weather_list/types";
 const API_KEY = "208564fc52a377799242a74d74f824e0";
 const cityCache = false;
 let weatherCache: WeatherType;
+type CityType = {
+  city: string;
+};
 
 export function getLocaion<
   ParamType,
-  ResultType = ParamType extends JSON ? JSON : string
+  ResultType = ParamType extends CityType ? CityType : string
 >(x?: ParamType): ResultType;
 export async function getLocaion(cityCache?: JSON) {
   try {
@@ -27,13 +30,15 @@ export async function getLocaion(cityCache?: JSON) {
 }
 
 export async function getCurrenCityTemp(): Promise<string | WeatherType> {
-  const curCity = await weather.getLocaion();
+  const curCity: CityType | string = await weather.getLocaion();
   try {
     if (curCity === "Failed to fetch of geo") {
       throw new Error("Failed to fetch of geo");
     }
     const response = await window.fetch(
-      `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${curCity.city}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${
+        (curCity as CityType).city
+      }&appid=${API_KEY}`
     );
     weatherCache = await response.json();
     return weatherCache;

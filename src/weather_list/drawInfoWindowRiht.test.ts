@@ -1,4 +1,5 @@
 import { drawInfoWindowRiht } from "./drawInfoWindowRiht";
+import WeatherType from "./types";
 
 let el: HTMLDivElement;
 describe("drawInfoWindowRiht", () => {
@@ -22,7 +23,7 @@ describe("drawInfoWindowRiht", () => {
     };
     const inner = /Current temperature in Saratov is {2}2.34/;
 
-    expect(drawInfoWindowRiht(weather)).toMatch(inner);
+    expect(drawInfoWindowRiht(weather as WeatherType)).toMatch(inner);
   });
   it("should draw the right window with the text that the entered city was not found", async () => {
     const weather = "Zaratov";

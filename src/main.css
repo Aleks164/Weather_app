@@ -124,7 +124,7 @@ hr {
   float: left;
   border: 10px solid transparent;
   width: 680px;
-  border-image: url(images/1.png) 10% repeat;
+  border-image: url("images/1.png") 10% repeat;
 }
 
 #weatherInfo {
@@ -136,7 +136,7 @@ hr {
   display: inline-block;
   border-right: 10px solid;
   text-decoration: underline;
-  border-image: url(images/1.png) 10% repeat;
+  border-image: url("images/1.png") 10% repeat;
 }
 
 #map {
@@ -178,7 +178,7 @@ hr {
   height: 110px;
   width: 240px;
   border: 2px solid grey;
-  border-image: url(images/1.png) 30 round round;
+  border-image: url("images/1.png") 30 round round;
 }
 
 #weatherInfoWindowRiht {
@@ -189,7 +189,7 @@ hr {
   height: 110px;
   width: 282px;
   border: 2px solid grey;
-  border-image: url(images/1.png) 30 round round;
+  border-image: url("images/1.png") 30 round round;
   font-size: 20px;
   font-weight: bold;
   vertical-align: middle;
