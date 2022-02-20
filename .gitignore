@@ -1,3 +1,4 @@
-.ssh
-node_modules/
-dist/
+node_modules
+dist
+.eslintcache
+coverage

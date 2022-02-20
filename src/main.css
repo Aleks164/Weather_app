@@ -1,0 +1,237 @@
+html {
+  width: 800px;
+}
+
+body {
+  width: 100%;
+  background-color: #ffa6a6;
+}
+
+#curCity {
+  float: left;
+  display: inline-block;
+  padding-left: 15px;
+  margin-bottom: 1px;
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: left;
+  font-family: Papyrus;
+  font-size: 22px;
+}
+
+#tempColor,
+#curCity {
+  color: rgb(42 157 224);
+}
+
+#curTemp {
+  margin-top: 2px;
+  line-height: 0.9;
+  padding-left: 15px;
+  margin-bottom: 5px;
+  font-weight: normal;
+  text-align: left;
+  font-size: 22px;
+}
+
+#p_before {
+  text-align: center;
+  font-size: 18px;
+  font-weight: normal;
+  padding: 10px;
+  margin-top: 0;
+}
+
+#userInput {
+  width: 210px;
+  font-size: 17px;
+  color: blue;
+}
+
+#imgWind {
+  margin-left: 30px;
+  margin-top: 0;
+}
+
+hr {
+  margin-top: -5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#WeatherCityTemp {
+  display: flex;
+}
+
+#maindiv {
+  width: 700px;
+}
+
+#hr1 {
+  margin-top: 0;
+  margin-bottom: 0;
+  float: left;
+  height: 4px;
+  background-color: #0fe7b438;
+  border-width: 0;
+  width: 400px;
+}
+
+#hr2 {
+  margin-top: 4px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#p_img {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#imgW {
+  position: absolute;
+  top: 60px;
+  display: block;
+  animation: imgW 5s infinite;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#textdiv {
+  display: block;
+}
+
+#greenBold {
+  font-weight: normal;
+}
+
+#greenBold:hover {
+  color: green;
+  font-weight: bold;
+}
+
+#form {
+  width: 285px;
+  display: inline-block;
+  margin: 5px;
+}
+
+#weatherInfocont {
+  height: 340px;
+  display: block;
+  float: left;
+  border: 10px solid transparent;
+  width: 680px;
+  border-image: url("images/1.png") 10% repeat;
+}
+
+#weatherInfo {
+  background-color: #fefbd8;
+  float: left;
+  height: 100%;
+  margin-top: 0;
+  width: 35%;
+  display: inline-block;
+  border-right: 10px solid;
+  text-decoration: underline;
+  border-image: url("images/1.png") 10% repeat;
+}
+
+#map {
+  height: 100%;
+  width: 63.4%;
+  display: inline-block;
+  background-color: goldenrod;
+}
+
+.title {
+  display: block;
+  text-align: left;
+  font-family: Papyrus;
+  color: rgb(42 157 224);
+  width: 700px;
+  margin: 1px;
+  padding-left: 15px;
+  font-size: 42px;
+  margin-bottom: -10px;
+}
+
+#info {
+  display: inline-block;
+  width: 386px;
+  background-color: #fefbd8;
+  text-align: justify;
+  font-size: 19px;
+  margin: 1px;
+  margin-top: 10px;
+  margin-right: 0;
+  padding: 4px;
+}
+
+#weatherInfoWindow {
+  float: right;
+  margin-top: 10px;
+  display: none;
+  background-color: #fefbd8;
+  height: 110px;
+  width: 240px;
+  border: 2px solid grey;
+  border-image: url("images/1.png") 30 round round;
+}
+
+#weatherInfoWindowRiht {
+  background-color: #efd394;
+  position: absolute;
+  top: 20px;
+  left: 418px;
+  height: 110px;
+  width: 282px;
+  border: 2px solid grey;
+  border-image: url("images/1.png") 30 round round;
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+form {
+  display: flex;
+  height: 35px;
+  padding-left: 8px;
+}
+
+li {
+  background-color: #fefbd8;
+  text-align: left;
+}
+
+ol > li {
+  font-size: 25px;
+}
+
+li:hover {
+  color: red;
+}
+
+.animate__fadeInLeft {
+  animation-duration: 3.5s;
+}
+
+.animate__fadeInDown {
+  animation-duration: 0.5s;
+}
+
+@keyframes imgW {
+  0% {
+    left: 10px;
+  }
+
+  50% {
+    left: 220px;
+  }
+
+  100% {
+    left: 10px;
+  }
+}
